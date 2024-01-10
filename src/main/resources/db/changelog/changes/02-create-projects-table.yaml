@@ -25,12 +25,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: start_date
-                  type: timestamp
+                  type: date
                   constraints:
                     nullable: false
               - column:
                   name: end_date
-                  type: timestamp
+                  type: date
                   constraints:
                     nullable: false
               - column:
