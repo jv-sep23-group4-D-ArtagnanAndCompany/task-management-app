@@ -7,8 +7,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class UserResponseRegistrationDto {
     private Long id;
+    private String email;
     private String userName;
-    private String password;
     private String firstName;
     private String lastName;
 }
