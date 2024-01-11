@@ -2,12 +2,14 @@ package application.controller;
 
 import application.dto.comment.CommentRequestDto;
 import application.dto.comment.CommentResponseDto;
+import application.model.User;
 import application.service.comment.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,14 +28,18 @@ public class CommentController {
 
     @GetMapping("/?taskId={taskId}")
     @Operation(summary = "Get all comments to the particular task by id")
-    public List<CommentResponseDto> getCommentByTaskId(@PathVariable Long taskId) {
-        return commentService.getCommentsByTaskId(taskId);
+    public List<CommentResponseDto> getCommentByTaskId(@PathVariable Long taskId,
+                                                       Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return commentService.getCommentsByTaskId(taskId, user.getId());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new comment")
-    public CommentResponseDto createNewComment(@RequestBody CommentRequestDto requestDto) {
-        return commentService.save(requestDto);
+    public CommentResponseDto createNewComment(@RequestBody CommentRequestDto requestDto,
+                                               Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return commentService.save(requestDto, user);
     }
 }
