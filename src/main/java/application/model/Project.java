@@ -10,8 +10,10 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @SQLDelete(sql = "UPDATE projects SET is_deleted = true WHERE id = ?")
@@ -32,7 +34,8 @@ public class Project {
     @Column(nullable = false)
     private LocalDate endDate;
     @Enumerated
-    @Column(nullable = false, columnDefinition = "varchar")
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Column(nullable = false)
     private Status status;
     @Column(nullable = false)
     private boolean isDeleted = false;

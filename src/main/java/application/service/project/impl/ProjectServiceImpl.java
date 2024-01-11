@@ -8,7 +8,6 @@ import application.model.Project;
 import application.repository.ProjectRepository;
 import application.service.project.ProjectService;
 import jakarta.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +23,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectResponseDto> findAll(Pageable pageable) {
-        return projectMapper.toDtoList(projectRepository.findAll());
+        return projectMapper.toDtoList(projectRepository.getAllProjects(pageable));
     }
 
     @Override
@@ -39,15 +38,13 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponseDto save(ProjectRequestDto requestDto) {
         Project project = projectMapper.toEntity(requestDto);
         project.setStatus(Project.Status.INITIATED);
-        project.setStartDate(LocalDate.now());
-        project.setEndDate(LocalDate.now().plusDays(3L));
         return projectMapper.toDto(projectRepository.save(project));
     }
 
     @Override
     @Transactional
     public ProjectResponseDto update(ProjectRequestDto requestDto, Long id) {
-        if (!projectRepository.existsById(id)) {
+        if (projectRepository.existsProjectById(id)) {
             throw new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id);
         }
         Project updatedProject = projectMapper.toEntity(requestDto);
@@ -57,7 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void delete(Long id) {
-        if (!projectRepository.existsById(id)) {
+        if (projectRepository.existsProjectById(id)) {
             throw new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id);
         }
         projectRepository.deleteById(id);
