@@ -17,3 +17,7 @@ databaseChangeLog:
       file: db/changelog/changes/08-add-roles-to-roles-table.yaml
   - include:
       file: db/changelog/changes/09-create-users_roles-table.yaml
+  - include:
+      file: db/changelog/changes/10-add-constraints-labels-table.yaml
+  - include:
+      file: db/changelog/changes/11-insert-labels-labels-table.yaml
