@@ -44,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public ProjectResponseDto update(ProjectRequestDto requestDto, Long id) {
-        if (projectRepository.existsProjectById(id)) {
+        if (!projectRepository.existsProjectById(id)) {
             throw new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id);
         }
         Project updatedProject = projectMapper.toEntity(requestDto);
@@ -54,7 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void delete(Long id) {
-        if (projectRepository.existsProjectById(id)) {
+        if (!projectRepository.existsProjectById(id)) {
             throw new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id);
         }
         projectRepository.deleteById(id);
