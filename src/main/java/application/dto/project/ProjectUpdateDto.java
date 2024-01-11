@@ -1,6 +1,5 @@
 package application.dto.project;
 
-import application.model.Project;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -17,5 +16,5 @@ public class ProjectUpdateDto {
     @NotNull
     private LocalDate endDate;
     @NotNull
-    private Project.Status status;
+    private String status;
 }
