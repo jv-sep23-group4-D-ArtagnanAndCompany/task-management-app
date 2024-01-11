@@ -1,11 +1,11 @@
 package application.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
@@ -21,10 +21,10 @@ public class Label {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @Column(nullable = false)
     private String name;
-    @NotNull
+    @Column(nullable = false)
     private String color;
-    @NotNull
+    @Column(nullable = false)
     private boolean isDeleted = false;
 }

@@ -42,11 +42,15 @@ databaseChangeLog:
                   name: project_id
                   type: bigint
                   constraints:
+                    foreignKeyName: fk_tasks_project_id
+                    references: projects(id)
                     nullable: false
               - column:
                   name: assignee_id
                   type: bigint
                   constraints:
+                    foreignKeyName: fk_tasks_assignee_id
+                    references: users(id)
                     nullable: false
               - column:
                   name: is_deleted

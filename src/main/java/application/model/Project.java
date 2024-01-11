@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -24,18 +23,18 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @Column(nullable = false)
     private String name;
-    @NotNull
+    @Column(nullable = false)
     private String description;
-    @NotNull
+    @Column(nullable = false)
     private LocalDate startDate;
-    @NotNull
+    @Column(nullable = false)
     private LocalDate endDate;
     @Enumerated
     @Column(nullable = false, columnDefinition = "varchar")
     private Status status;
-    @NotNull
+    @Column(nullable = false)
     private boolean isDeleted = false;
 
     public enum Status {

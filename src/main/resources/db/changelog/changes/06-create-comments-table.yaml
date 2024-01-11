@@ -17,11 +17,15 @@ databaseChangeLog:
                   name: task_id
                   type: bigint
                   constraints:
+                    foreignKeyName: fk_comments_task_id
+                    references: tasks(id)
                     nullable: false
               - column:
                   name: user_id
                   type: bigint
                   constraints:
+                    foreignKeyName: fk_comments_user_id
+                    references: users(id)
                     nullable: false
               - column:
                   name: text

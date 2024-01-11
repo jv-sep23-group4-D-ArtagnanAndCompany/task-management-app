@@ -6,8 +6,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -24,9 +25,9 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @Column(nullable = false)
     private String name;
-    @NotNull
+    @Column(nullable = false)
     private String description;
     @Enumerated
     @Column(nullable = false, columnDefinition = "varchar")
@@ -34,13 +35,15 @@ public class Task {
     @Enumerated
     @Column(nullable = false, columnDefinition = "varchar")
     private Status status;
-    @NotNull
+    @Column(nullable = false)
     private LocalDate dueDate;
-    @NotNull
-    private Long projectId;
-    @NotNull
-    private Long assigneeId;
-    @NotNull
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Project project;
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "assignee_id")
+    private User assigneeId;
+    @Column(nullable = false)
     private boolean isDeleted = false;
 
     public enum Priority {

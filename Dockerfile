@@ -6,6 +6,7 @@ RUN java -Djarmode=layertools -jar application.jar extract
 
 FROM openjdk:17-jdk-slim
 WORKDIR application
+COPY .env ./.env
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
 COPY --from=builder application/snapshot-dependencies/ ./

@@ -17,6 +17,8 @@ databaseChangeLog:
                   name: task_id
                   type: bigint
                   constraints:
+                    foreignKeyName: fk_attachments_task_id
+                    references: tasks(id)
                     nullable: false
               - column:
                   name: drop_box_file_id

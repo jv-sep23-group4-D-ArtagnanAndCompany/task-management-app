@@ -1,11 +1,13 @@
 package application.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -22,14 +24,15 @@ public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    private Long taskId;
-    @NotNull
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Task task;
+    @Column(nullable = false)
     private String dropBoxFileId;
-    @NotNull
+    @Column(nullable = false)
     private String fileName;
-    @NotNull
+    @Column(nullable = false)
     private LocalDateTime uploadDate;
-    @NotNull
+    @Column(nullable = false)
     private boolean isDeleted = false;
 }

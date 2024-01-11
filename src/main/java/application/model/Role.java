@@ -2,38 +2,41 @@ package application.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-@SQLDelete(sql = "UPDATE comments SET is_deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE roles SET is_deleted = true WHERE id = ?")
 @SQLRestriction(value = "is_deleted = false")
 @Data
 @Accessors(chain = true)
-@Table(name = "comments")
-public class Comment {
+@Table(name = "roles")
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JoinColumn(nullable = false)
-    @ManyToOne
-    private Task task;
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private User user;
-    @Column(nullable = false)
-    private String text;
-    @Column(nullable = false)
-    private LocalDateTime timeStamp;
+    @Enumerated
+    @Column(nullable = false, columnDefinition = "varchar")
+    private RoleName roleName;
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + roleName;
+    }
+
+    public enum RoleName {
+        ADMIN,
+        USER
+    }
+
 }
