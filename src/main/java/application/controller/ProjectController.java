@@ -2,6 +2,7 @@ package application.controller;
 
 import application.dto.project.ProjectRequestDto;
 import application.dto.project.ProjectResponseDto;
+import application.dto.project.ProjectUpdateDto;
 import application.service.project.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -50,7 +51,7 @@ public class ProjectController {
     @PutMapping("/{id}")
     @Operation(summary = "Update project by id")
     public ProjectResponseDto updateProjectById(@PathVariable Long id,
-                                                @RequestBody ProjectRequestDto requestDto) {
+                                                @RequestBody ProjectUpdateDto requestDto) {
         return projectService.update(requestDto, id);
     }
 

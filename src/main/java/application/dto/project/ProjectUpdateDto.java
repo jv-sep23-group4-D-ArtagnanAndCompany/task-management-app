@@ -1,12 +1,13 @@
 package application.dto.project;
 
+import application.model.Project;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.Data;
 
 @Data
-public class ProjectRequestDto {
+public class ProjectUpdateDto {
     @NotBlank(message = "Name cannot be null or empty")
     private String name;
     @NotBlank(message = "Description cannot be null or empty")
@@ -15,4 +16,6 @@ public class ProjectRequestDto {
     private LocalDate startDate;
     @NotNull
     private LocalDate endDate;
+    @NotNull
+    private Project.Status status;
 }

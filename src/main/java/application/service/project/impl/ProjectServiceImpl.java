@@ -2,6 +2,7 @@ package application.service.project.impl;
 
 import application.dto.project.ProjectRequestDto;
 import application.dto.project.ProjectResponseDto;
+import application.dto.project.ProjectUpdateDto;
 import application.exception.EntityNotFoundException;
 import application.mapper.ProjectMapper;
 import application.model.Project;
@@ -43,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public ProjectResponseDto update(ProjectRequestDto requestDto, Long id) {
+    public ProjectResponseDto update(ProjectUpdateDto requestDto, Long id) {
         if (!projectRepository.existsProjectById(id)) {
             throw new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id);
         }
