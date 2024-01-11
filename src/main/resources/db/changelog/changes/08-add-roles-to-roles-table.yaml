@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: added-roles-to-roles-table
+      id: added_roles_to_roles_table
       author: rostyslav_kuzmych
       changes:
         - insert:
