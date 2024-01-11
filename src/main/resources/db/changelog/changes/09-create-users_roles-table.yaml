@@ -13,7 +13,6 @@ databaseChangeLog:
                     foreignKeyName: fk_users_roles_user_id
                     references: users(id)
                     primaryKey: true
-                    nullable: false
               - column:
                   name: role_id
                   type: bigint
@@ -21,4 +20,3 @@ databaseChangeLog:
                     foreignKeyName: fk_users_roles_role_id
                     references: roles(id)
                     primaryKey: true
-                    nullable: false

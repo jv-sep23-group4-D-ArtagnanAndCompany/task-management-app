@@ -15,7 +15,7 @@ services:
     depends_on:
       - mysqldb
     restart: on-failure
-    image: book_store
+    image: task_management_app
     build: .
     env_file: ./.env
     ports:
