@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class UserResponseRegistrationDto {
+public class UserResponseDto {
     private Long id;
     private String email;
     private String userName;
