@@ -2,8 +2,6 @@ package application.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,7 +32,7 @@ public class Project {
     @Column(nullable = false)
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private User user;
@@ -43,7 +41,6 @@ public class Project {
     private LocalDate startDate;
     @Column(nullable = false)
     private LocalDate endDate;
-    @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false)
     private Status status;
