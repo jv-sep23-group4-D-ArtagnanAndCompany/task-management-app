@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    @Query("SELECT t FROM Task t JOIN FETCH t.projectId")
+    @Query("SELECT t FROM Task t JOIN FETCH t.project")
     List<Task> getAllByProjectId(Long projectId);
 }
