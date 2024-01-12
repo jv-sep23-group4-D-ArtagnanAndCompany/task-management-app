@@ -2,8 +2,8 @@ package application.controller;
 
 import application.dto.user.UserRequestLoginDto;
 import application.dto.user.UserRequestRegistrationDto;
+import application.dto.user.UserResponseDto;
 import application.dto.user.UserResponseLoginDto;
-import application.dto.user.UserResponseRegistrationDto;
 import application.security.AuthenticationService;
 import application.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +28,7 @@ public class AuthenticationController {
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Register user", description = "Endpoint for user registration")
-    public UserResponseRegistrationDto register(@Valid @RequestBody
+    public UserResponseDto register(@Valid @RequestBody
                                         UserRequestRegistrationDto userRequestDto) {
         return userService.register(userRequestDto);
     }

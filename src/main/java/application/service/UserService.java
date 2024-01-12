@@ -1,8 +1,8 @@
 package application.service;
 
 import application.dto.user.UserRequestRegistrationDto;
-import application.dto.user.UserResponseRegistrationDto;
+import application.dto.user.UserResponseDto;
 
 public interface UserService {
-    UserResponseRegistrationDto register(UserRequestRegistrationDto userRequestRegistrationDto);
+    UserResponseDto register(UserRequestRegistrationDto userRequestRegistrationDto);
 }

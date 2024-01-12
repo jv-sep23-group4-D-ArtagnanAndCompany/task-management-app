@@ -1,7 +1,7 @@
 package application.service.impl;
 
 import application.dto.user.UserRequestRegistrationDto;
-import application.dto.user.UserResponseRegistrationDto;
+import application.dto.user.UserResponseDto;
 import application.exception.RegistrationException;
 import application.mapper.UserMapper;
 import application.model.Role;
@@ -17,22 +17,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private static final Long USER_ID = 2L;
-    private static final String EXCEPTION = "User with email %s is already authenticated";
+    private static final Long USER_ROLE_ID = 2L;
+    private static final String EMAIL_RESERVED = "User with email %s already exists";
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserResponseRegistrationDto register(UserRequestRegistrationDto
-                                                            userRequestRegistrationDto) {
+    public UserResponseDto register(
+            UserRequestRegistrationDto userRequestRegistrationDto) {
         if (userRepository.findUserByEmail(userRequestRegistrationDto.getEmail()).isPresent()) {
-            throw new RegistrationException(String.format(EXCEPTION,
+            throw new RegistrationException(String.format(EMAIL_RESERVED,
                     userRequestRegistrationDto.getEmail()));
         }
         User user = userMapper.toEntity(userRequestRegistrationDto);
         user.setPassword(passwordEncoder.encode(userRequestRegistrationDto.getPassword()));
-        Role role = new Role().setId(USER_ID);
+        Role role = new Role().setId(USER_ROLE_ID);
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         user.setRoleSet(roles);
