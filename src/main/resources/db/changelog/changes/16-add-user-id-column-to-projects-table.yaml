@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_user_id_column
+      author: andriy_hrynevetskyi
+      changes:
+        - addColumn:
+            tableName: projects
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    references: users(id)
+                    foreignKeyName: fk_user_id_projects
