@@ -22,9 +22,8 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public LabelResponseDto create(LabelRequestDto labelRequestDto) {
-        Label label = labelMapper.toEntity(labelRequestDto);
-        Label savedLabel = labelRepository.save(label);
-        return labelMapper.toResponseDto(savedLabel);
+        return labelMapper.toResponseDto(labelRepository
+                .save(labelMapper.toEntity(labelRequestDto)));
     }
 
     @Override
@@ -40,8 +39,7 @@ public class LabelServiceImpl implements LabelService {
                 () -> new EntityNotFoundException(CANT_FIND_BY_ID + id));
         label.setName(labelRequestDto.getName())
                 .setColor(labelRequestDto.getColor());
-        Label savedLabel = labelRepository.save(label);
-        return labelMapper.toResponseDto(savedLabel);
+        return labelMapper.toResponseDto(labelRepository.save(label));
     }
 
     @Override
