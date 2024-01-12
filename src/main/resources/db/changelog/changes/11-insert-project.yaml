@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-project
+      author: AgroFix
+      changes:
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: name
+                  value: Sample Project
+              - column:
+                  name: description
+                  value: Sample project description
+              - column:
+                  name: start_date
+                  value: '2024-01-11'
+              - column:
+                  name: end_date
+                  value: '2024-12-31'
+              - column:
+                  name: status
+                  value: In Progress
+              - column:
+                  name: is_deleted
+                  value: false

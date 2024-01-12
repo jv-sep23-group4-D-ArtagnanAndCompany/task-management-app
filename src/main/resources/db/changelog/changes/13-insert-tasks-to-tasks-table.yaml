@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-tasks-to-task-table
+      author: AgroFix
+      changes:
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: 'Task 1'
+              - column:
+                  name: description
+                  value: 'Description for Task 1'
+              - column:
+                  name: priority
+                  value: 'HIGH'
+              - column:
+                  name: status
+                  value: 'IN_PROGRESS'
+              - column:
+                  name: due_date
+                  value: '2024-01-24'
+              - column:
+                  name: project_id
+                  value: 1
+              - column:
+                  name: assignee_id
+                  value: 1
+              - column:
+                  name: is_deleted
+                  value: false
