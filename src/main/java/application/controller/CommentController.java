@@ -12,10 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,10 +27,12 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping("/?taskId={taskId}")
+    @GetMapping()
     @Operation(summary = "Get all comments to the particular task by id")
-    public List<CommentResponseDto> getCommentByTaskId(@PathVariable Long taskId) {
-        return commentService.getCommentsByTaskId(taskId);
+    public List<CommentResponseDto> getCommentsByTaskId(@RequestParam Long taskId,
+                                                       Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return commentService.getCommentsByTaskId(taskId, user.getId());
     }
 
     @PostMapping
