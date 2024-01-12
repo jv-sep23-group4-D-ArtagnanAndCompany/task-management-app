@@ -31,13 +31,13 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto) {
         Task task = new Task();
         Task createdTask = savedTask(taskRequestDto, task);
-        return taskMapper.toDto(createdTask);
+        return taskMapper.toResponseDto(createdTask);
     }
 
     @Override
     public List<TaskResponseDto> getAll(Long projectId) {
         return taskRepository.getAllByProjectId(projectId).stream()
-                .map(taskMapper::toDto)
+                .map(taskMapper::toResponseDto)
                 .toList();
     }
 
@@ -46,14 +46,14 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(taskId).orElseThrow(
                 () -> new EntityNotFoundException(CANT_FIND_TASK_BY_ID + taskId));
         Task updatedTask = savedTask(taskRequestDto, task);
-        return taskMapper.toDto(updatedTask);
+        return taskMapper.toResponseDto(updatedTask);
     }
 
     @Override
     public TaskResponseDto getTaskById(Long taskId) {
         Optional<Task> task = taskRepository.findById(taskId);
         return taskMapper
-                .toDto(task.orElseThrow(() ->
+                .toResponseDto(task.orElseThrow(() ->
                         new EntityNotFoundException(CANT_FIND_TASK_BY_ID + taskId)));
     }
 

@@ -13,7 +13,7 @@ public interface TaskMapper {
     @Mapping(target = "assigneeId", source = "assignee.id")
     @Mapping(target = "status", source = "status", qualifiedByName = "getStatusFromEnum")
     @Mapping(target = "priority", source = "priority", qualifiedByName = "getPriorityFromEnum")
-    TaskResponseDto toDto(Task task);
+    TaskResponseDto toResponseDto(Task task);
 
     @Named("getStatusFromEnum")
     default String getStatusFromEnum(Task.Status status) {
