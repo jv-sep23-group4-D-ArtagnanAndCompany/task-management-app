@@ -31,3 +31,5 @@ databaseChangeLog:
       file: db/changelog/changes/15-insert-tasks-to-tasks-table.yaml
   - include:
       file: db/changelog/changes/16-add-user-id-column-to-projects-table.yaml
+  - include:
+      file: db/changelog/changes/17-add-one-more-project-to-projects-table.yaml
