@@ -52,7 +52,6 @@ public class TaskController {
         return taskService.updateTaskById(taskId, taskDto);
     }
 
-
     @DeleteMapping("/{taskId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)

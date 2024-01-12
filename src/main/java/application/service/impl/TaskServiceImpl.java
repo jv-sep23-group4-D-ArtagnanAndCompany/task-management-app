@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +26,7 @@ public class TaskServiceImpl implements TaskService {
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+
     @Override
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto) {
         Task task = new Task();
@@ -44,7 +44,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateTaskById(Long taskId, TaskRequestDto taskRequestDto) {
         Task task = taskRepository.findById(taskId).orElseThrow(
-                () -> new EntityNotFoundException(CANT_FIND_TASK_BY_ID  + taskId));
+                () -> new EntityNotFoundException(CANT_FIND_TASK_BY_ID + taskId));
         Task updatedTask = savedTask(taskRequestDto, task);
         return taskMapper.toDto(updatedTask);
     }
@@ -54,7 +54,7 @@ public class TaskServiceImpl implements TaskService {
         Optional<Task> task = taskRepository.findById(taskId);
         return taskMapper
                 .toDto(task.orElseThrow(() ->
-                        new EntityNotFoundException(CANT_FIND_TASK_BY_ID  + taskId)));
+                        new EntityNotFoundException(CANT_FIND_TASK_BY_ID + taskId)));
     }
 
     @Override
