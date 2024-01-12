@@ -2,7 +2,7 @@ package application.mapper;
 
 import application.config.MapperConfig;
 import application.dto.user.UserRequestRegistrationDto;
-import application.dto.user.UserResponseRegistrationDto;
+import application.dto.user.UserResponseDto;
 import application.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,7 +12,5 @@ public interface UserMapper {
     @Mapping(target = "password", ignore = true)
     User toEntity(UserRequestRegistrationDto registrationDto);
 
-    UserResponseRegistrationDto toDto(User user);
-
-    UserProfileResponseDto toDto(User user);
+    UserResponseDto toDto(User user);
 }

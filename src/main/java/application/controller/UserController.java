@@ -1,8 +1,8 @@
 package application.controller;
 
-import application.dto.UpdateProfileRequestDto;
-import application.dto.UpdateRoleRequestDto;
-import application.dto.UserResponseDto;
+import application.dto.user.UpdateProfileRequestDto;
+import application.dto.user.UpdateRoleRequestDto;
+import application.dto.user.UserResponseDto;
 import application.model.User;
 import application.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,7 +1,8 @@
-package application.service;
+package application.service.impl;
 
 import application.dto.HealthResponseDto;
 import application.mapper.HealthMapper;
+import application.service.HealthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

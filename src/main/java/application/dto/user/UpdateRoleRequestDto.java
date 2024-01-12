@@ -1,4 +1,4 @@
-package application.dto;
+package application.dto.user;
 
 import application.model.Role;
 import jakarta.validation.constraints.NotNull;
