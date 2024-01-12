@@ -17,7 +17,7 @@ public interface UserMapper {
     @Mapping(target = "password", ignore = true)
     User toEntity(UserRequestRegistrationDto registrationDto);
 
-    UserResponseDto toDto(User user);
+    UserResponseDto toResponseDto(User user);
 
     @Mapping(target = "roleIds", source = "roleSet", qualifiedByName = "getIdsByRoles")
     UserProfileResponseDto toResponseDtoWithRoles(User user);
@@ -28,4 +28,3 @@ public interface UserMapper {
         return roleSet.stream().map(Role::getId).collect(Collectors.toSet());
     }
 }
-

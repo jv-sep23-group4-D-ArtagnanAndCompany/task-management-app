@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         user.setRoleSet(roles);
-        return userMapper.toDto(userRepository.save(user));
+        return userMapper.toResponseDto(userRepository.save(user));
     }
 
     @Override

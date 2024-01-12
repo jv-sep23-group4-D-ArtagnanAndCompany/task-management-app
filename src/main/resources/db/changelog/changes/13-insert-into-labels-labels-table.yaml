@@ -1,0 +1,41 @@
+databaseChangeLog:
+  -  changeSet:
+       id: insert-labels-labels-table
+       author:  Volodymyr Ozemblovskyi
+       changes:
+         -  insert:
+              tableName:  labels
+              columns:
+                -  column:
+                     name:  name
+                     value: red label
+                -  column:
+                     name:  color
+                     value: red
+         -  insert:
+              tableName:  labels
+              columns:
+                -  column:
+                     name:  name
+                     value: blue label
+                -  column:
+                     name:  color
+                     value: blue
+         -  insert:
+              tableName:  labels
+              columns:
+                -  column:
+                     name:  name
+                     value: green label
+                -  column:
+                     name:  color
+                     value: green
+         -  insert:
+              tableName:  labels
+              columns:
+                -  column:
+                     name:  name
+                     value: yellow label
+                -  column:
+                     name:  color
+                     value: yellow
