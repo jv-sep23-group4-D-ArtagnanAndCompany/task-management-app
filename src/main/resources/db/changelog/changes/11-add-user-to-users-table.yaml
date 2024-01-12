@@ -8,16 +8,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: email
-                  value: "alice@gmail.com"
+                  value: alice@gmail.com
               - column:
                   name: password
-                  value: "$2a$10$fRCKtHfKmoKkzXByokmM6.FVmatskXfInb.IYBUI1ukvDBjN4EqGG"
+                  value: $2a$10$fRCKtHfKmoKkzXByokmM6.FVmatskXfInb.IYBUI1ukvDBjN4EqGG
               - column:
                   name: user_name
-                  value: "alice123"
+                  value: alice123
               - column:
                   name: first_name
-                  value: "Alice"
+                  value: Alice
               - column:
                   name: last_name
-                  value: "Johnson"
+                  value: Johnson

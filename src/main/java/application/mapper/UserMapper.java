@@ -12,5 +12,5 @@ public interface UserMapper {
     @Mapping(target = "password", ignore = true)
     User toEntity(UserRequestRegistrationDto registrationDto);
 
-    UserResponseDto toDto(User user);
+    UserResponseDto toResponseDto(User user);
 }
