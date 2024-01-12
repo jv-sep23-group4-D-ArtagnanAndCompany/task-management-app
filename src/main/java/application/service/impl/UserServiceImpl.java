@@ -2,6 +2,7 @@ package application.service.impl;
 
 import application.dto.user.UpdateProfileRequestDto;
 import application.dto.user.UpdateRoleRequestDto;
+import application.dto.user.UserProfileResponseDto;
 import application.dto.user.UserRequestRegistrationDto;
 import application.dto.user.UserResponseDto;
 import application.exception.EntityNotFoundException;
@@ -9,12 +10,12 @@ import application.exception.RegistrationException;
 import application.mapper.UserMapper;
 import application.model.Role;
 import application.model.User;
+import application.repository.RoleRepository;
 import application.repository.UserRepository;
 import application.service.UserService;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     public UserResponseDto register(
             UserRequestRegistrationDto userRequestRegistrationDto) {
@@ -44,29 +46,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto updateRole(Long id, UpdateRoleRequestDto roleRequestDto) {
+    public UserProfileResponseDto updateRole(Long id, UpdateRoleRequestDto roleRequestDto) {
         User userFromDb = getUserFromDb(id);
-        Role role = new Role();
         Set<Role> roleSet = userFromDb.getRoleSet();
-        if (roleSet.add(role.setRoleName(roleRequestDto.getRole().getRoleName()))) {
-            userFromDb.setRoleSet(roleSet);
-        }
-        return userMapper.toDto(userRepository.save(userFromDb));
+        Role role = roleRepository.findRoleByRoleName(roleRequestDto.getRoleName()).orElseGet(null);
+        roleSet.add(role);
+        userFromDb.setRoleSet(roleSet);
+        userRepository.save(userFromDb);
+        return userMapper.toResponseDtoWithRoles(userFromDb);
     }
 
     @Override
-    public UserResponseDto getProfile(Long id) {
-        return userMapper.toDto(getUserFromDb(id));
+    public UserProfileResponseDto getProfile(Long id) {
+        return userMapper.toResponseDtoWithRoles(getUserFromDb(id));
     }
 
     @Override
-    public UserResponseDto updateProfileInfo(Long id, UpdateProfileRequestDto profileRequestDto) {
-        BeanUtils.copyProperties(userRepository.findById(id), profileRequestDto);
-        return null;
+    public UserProfileResponseDto updateProfileInfo(
+            Long id,
+            UpdateProfileRequestDto profileRequestDto) {
+        User userFromDb = getUserFromDb(id);
+        userFromDb.setUserName(profileRequestDto.getUserName());
+        userFromDb.setEmail(profileRequestDto.getEmail());
+        userFromDb.setFirstName(profileRequestDto.getFirstName());
+        userFromDb.setLastName(profileRequestDto.getLastName());
+        userRepository.save(userFromDb);
+        return userMapper.toResponseDtoWithRoles(userFromDb);
     }
 
     private User getUserFromDb(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        return userRepository.findUserById(id).orElseThrow(() -> new EntityNotFoundException(
                 String.format(CANT_FIND_BY_ID, id)));
     }
 }

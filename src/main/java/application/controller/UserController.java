@@ -2,11 +2,12 @@ package application.controller;
 
 import application.dto.user.UpdateProfileRequestDto;
 import application.dto.user.UpdateRoleRequestDto;
-import application.dto.user.UserResponseDto;
+import application.dto.user.UserProfileResponseDto;
 import application.model.User;
 import application.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +28,8 @@ public class UserController {
     @PutMapping("/{id}/role")
     @Operation(summary = "Update user role",
             description = "Update user role by user id")
-    UserResponseDto updateUserRole(@PathVariable Long id,
-                                   @RequestBody UpdateRoleRequestDto roleRequestDto
+    UserProfileResponseDto updateUserRole(@PathVariable Long id,
+                                          @RequestBody @Valid UpdateRoleRequestDto roleRequestDto
     ) {
         return userService.updateRole(id, roleRequestDto);
     }
@@ -36,7 +37,7 @@ public class UserController {
     @GetMapping("/me")
     @Operation(summary = "Get user profile info",
             description = "Get user profile info")
-    UserResponseDto getProfileInfo(Authentication authentication) {
+    UserProfileResponseDto getProfileInfo(Authentication authentication) {
         User user = (User)authentication.getPrincipal();
         return userService.getProfile(user.getId());
     }
@@ -44,8 +45,9 @@ public class UserController {
     @PutMapping("/me")
     @Operation(summary = "Update user profile info",
             description = "Update user profile info")
-    UserResponseDto updateProfileInfo(Authentication authentication,
-                                      UpdateProfileRequestDto profileRequestDto) {
+    UserProfileResponseDto updateProfileInfo(
+            Authentication authentication,
+            @RequestBody @Valid UpdateProfileRequestDto profileRequestDto) {
         User user = (User)authentication.getPrincipal();
         return userService.updateProfileInfo(user.getId(), profileRequestDto);
     }
