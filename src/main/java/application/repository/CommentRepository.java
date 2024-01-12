@@ -12,8 +12,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
         FROM Comment c
         JOIN FETCH c.task t
         JOIN FETCH c.user u
-        WHERE t.id =:taskID
+        WHERE t.id =:taskId
         AND u.id =:userId
-    """)
+            """)
     List<Comment> findAllByTaskId(Long taskId, Long userId);
 }

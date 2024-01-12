@@ -3,7 +3,6 @@ package application.service.comment;
 import application.dto.comment.CommentRequestDto;
 import application.dto.comment.CommentResponseDto;
 import application.model.User;
-
 import java.util.List;
 
 public interface CommentService {
