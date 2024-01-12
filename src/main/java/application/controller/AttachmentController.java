@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,12 +20,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AttachmentController {
     private final AttachmentService attachmentService;
-    @PostMapping
+    @PostMapping(/{})
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new attachment",
             description = "Endpoint for creating a new attachment")
-    public AttachmentResponseDto createAttachment(@Valid @RequestBody
-                                                      AttachmentRequestDto requestDto) {
+    public AttachmentResponseDto createAttachment(MultipartFile multipartFile) {
         return attachmentService.createAttachment(requestDto);
     }
 
