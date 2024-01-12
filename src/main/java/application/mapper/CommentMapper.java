@@ -6,11 +6,15 @@ import application.dto.comment.CommentResponseDto;
 import application.model.Comment;
 import java.util.List;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(config = MapperConfig.class)
 public interface CommentMapper {
+    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "taskId", source = "task.id")
     CommentResponseDto toDto(Comment comment);
 
+    @Mapping(target = "task", ignore = true)
     Comment toEntity(CommentRequestDto requestDto);
 
     List<CommentResponseDto> toDtoList(List<Comment> comments);

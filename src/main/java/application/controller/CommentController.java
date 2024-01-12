@@ -2,12 +2,15 @@ package application.controller;
 
 import application.dto.comment.CommentRequestDto;
 import application.dto.comment.CommentResponseDto;
-import application.service.comment.CommentService;
+import application.model.User;
+import application.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +36,10 @@ public class CommentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new comment")
-    public CommentResponseDto createNewComment(@RequestBody CommentRequestDto requestDto) {
-        return commentService.save(requestDto);
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public CommentResponseDto createNewComment(@RequestBody CommentRequestDto requestDto,
+                                               Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return commentService.save(requestDto, user);
     }
 }
