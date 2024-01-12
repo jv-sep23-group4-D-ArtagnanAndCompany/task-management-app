@@ -2,12 +2,15 @@ package application.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -23,7 +26,9 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @Column(nullable = false, columnDefinition = "varchar")
     private RoleName roleName;
     @Column(nullable = false)
@@ -31,7 +36,7 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return "ROLE_" + roleName;
+        return "ROLE_" + roleName.name();
     }
 
     public enum RoleName {
