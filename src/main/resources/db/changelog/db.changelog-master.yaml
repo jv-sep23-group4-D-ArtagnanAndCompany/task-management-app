@@ -25,3 +25,7 @@ databaseChangeLog:
       file: db/changelog/changes/12-add-users_roles-to-users_roles-table.yaml
   - include:
       file: db/changelog/changes/13-insert-into-labels-labels-table.yaml
+  - include:
+      file: db/changelog/changes/14-insert_sample_project.yaml
+  - include:
+      file: db/changelog/changes/15-insert-tasks-to-tasks-table.yaml

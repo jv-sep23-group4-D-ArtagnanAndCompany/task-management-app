@@ -16,6 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -33,27 +34,27 @@ public class Task {
     private String name;
     @Column(nullable = false)
     private String description;
+
     @Enumerated(EnumType.STRING)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Column(nullable = false, columnDefinition = "varchar")
     private Priority priority;
+
     @Enumerated(EnumType.STRING)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Column(nullable = false, columnDefinition = "varchar")
     private Status status;
+
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDate dueDate;
     @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "project_id")
     private Project project;
     @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "assignee_id")
     private User assignee;
     @Column(nullable = false)
     private boolean isDeleted = false;
