@@ -7,12 +7,12 @@ import lombok.Data;
 
 @Data
 public class ProjectRequestDto {
-    @NotBlank(message = "Name cannot be null or empty")
+    @NotBlank(message = " cannot be null or empty")
     private String name;
-    @NotBlank(message = "Description cannot be null or empty")
+    @NotBlank(message = " cannot be null or empty")
     private String description;
-    @NotNull(message = "Start date cannot be null or empty")
+    @NotNull(message = " cannot be null or empty")
     private LocalDate startDate;
-    @NotNull(message = "End date cannot be null or empty")
+    @NotNull(message = " cannot be null or empty")
     private LocalDate endDate;
 }
