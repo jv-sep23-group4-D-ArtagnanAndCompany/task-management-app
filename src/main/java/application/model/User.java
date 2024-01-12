@@ -32,7 +32,6 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
     @Column(nullable = false)
     private String userName;
     @Column(nullable = false)
@@ -52,6 +51,10 @@ public class User implements UserDetails {
     private Set<Role> roleSet = new HashSet<>();
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    public String getUserName() {
+        return userName;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
