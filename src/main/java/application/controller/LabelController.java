@@ -29,7 +29,7 @@ public class LabelController {
     private final LabelService labelService;
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new label", description = "Create a new label")
     public LabelResponseDto create(@RequestBody @Valid LabelRequestDto labelRequestDto) {
@@ -37,7 +37,7 @@ public class LabelController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all labels", description = "Get a list of all available labels")
     public Set<LabelResponseDto> getAll(Pageable pageable) {
@@ -45,7 +45,7 @@ public class LabelController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update label", description = "Update data about the existing label by ID")
     public LabelResponseDto update(
@@ -56,7 +56,7 @@ public class LabelController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete label", description = "Mark existing label for deletion by ID")
     public void delete(@PathVariable Long id) {
