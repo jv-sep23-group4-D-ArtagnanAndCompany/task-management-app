@@ -8,16 +8,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: name
-                  value: 'Task 1'
+                  value: Task 1
               - column:
                   name: description
-                  value: 'Description for Task 1'
+                  value: Description for Task 1
               - column:
                   name: priority
-                  value: 'HIGH'
+                  value: HIGH
               - column:
                   name: status
-                  value: 'IN_PROGRESS'
+                  value: IN_PROGRESS
               - column:
                   name: due_date
                   value: '2024-01-24'
@@ -27,6 +27,3 @@ databaseChangeLog:
               - column:
                   name: assignee_id
                   value: 1
-              - column:
-                  name: is_deleted
-                  value: false
