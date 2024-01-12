@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
@@ -41,15 +42,19 @@ public class User implements UserDetails {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
+    @ManyToMany
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleSet = new HashSet<>();
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    public String getUserName() {
+        return userName;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -63,17 +68,17 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return !isDeleted;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return !isDeleted;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return !isDeleted;
     }
 
     @Override

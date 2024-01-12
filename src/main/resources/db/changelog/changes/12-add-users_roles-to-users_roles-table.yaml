@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_users_roles_to_users_roles_table
+      author: rostyslav_kuzmych
+      changes:
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 2
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: role_id
+                  value: 1
