@@ -17,3 +17,7 @@ databaseChangeLog:
       file: db/changelog/changes/08-add-roles-to-roles-table.yaml
   - include:
       file: db/changelog/changes/09-create-users_roles-table.yaml
+  - include:
+      file: db/changelog/changes/14-insert-project.yaml
+  - include:
+      file: db/changelog/changes/15-add-user-to-users-table.yaml
