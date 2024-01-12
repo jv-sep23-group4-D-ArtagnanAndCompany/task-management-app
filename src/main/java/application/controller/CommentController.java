@@ -29,6 +29,7 @@ public class CommentController {
 
     @GetMapping()
     @Operation(summary = "Get all comments to the particular task by id")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public List<CommentResponseDto> getCommentsByTaskId(@RequestParam Long taskId,
                                                        Authentication authentication) {
         User user = (User) authentication.getPrincipal();
