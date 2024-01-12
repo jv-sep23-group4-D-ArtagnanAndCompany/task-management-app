@@ -11,8 +11,8 @@ public class ProjectRequestDto {
     private String name;
     @NotBlank(message = "Description cannot be null or empty")
     private String description;
-    @NotNull
+    @NotNull(message = "Start date cannot be null or empty")
     private LocalDate startDate;
-    @NotNull
+    @NotNull(message = "End date cannot be null or empty")
     private LocalDate endDate;
 }

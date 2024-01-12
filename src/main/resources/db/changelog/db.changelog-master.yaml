@@ -21,3 +21,5 @@ databaseChangeLog:
       file: db/changelog/changes/11-add-user-to-users-table.yaml
   - include:
       file: db/changelog/changes/12-add-users_roles-to-users_roles-table.yaml
+  - include:
+      file: db/changelog/changes/13-add-user-id-column-to-projects-table.yaml

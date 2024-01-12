@@ -33,7 +33,6 @@ public class Project {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "user_id")
     @ToString.Exclude
