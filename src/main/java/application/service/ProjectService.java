@@ -14,7 +14,7 @@ public interface ProjectService {
 
     ProjectResponseDto save(ProjectRequestDto requestDto, User user);
 
-    ProjectResponseDto update(ProjectUpdateDto requestDto, Long id, User user);
+    ProjectResponseDto update(ProjectUpdateDto requestDto, Long id, Long userId);
 
     void delete(Long id);
 }

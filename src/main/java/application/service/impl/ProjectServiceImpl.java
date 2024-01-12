@@ -46,14 +46,15 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public ProjectResponseDto update(ProjectUpdateDto requestDto, Long id, User user) {
-        if (!projectRepository.existsProjectById(id)) {
-            throw new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id);
-        }
-        Project updatedProject = projectMapper.toEntity(requestDto);
-        updatedProject.setId(id);
-        updatedProject.setUser(user);
-        return projectMapper.toDto(projectRepository.save(updatedProject));
+    public ProjectResponseDto update(ProjectUpdateDto requestDto, Long id, Long userId) {
+        Project project = projectRepository.findByIdAndUserId(id, userId).orElseThrow(
+                () -> new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id));
+        project.setName(requestDto.getName());
+        project.setDescription(requestDto.getDescription());
+        project.setStartDate(requestDto.getStartDate());
+        project.setEndDate(requestDto.getEndDate());
+        project.setStatus(Project.Status.valueOf(requestDto.getStatus()));
+        return projectMapper.toDto(projectRepository.save(project));
     }
 
     @Override

@@ -34,7 +34,7 @@ public class ProjectController {
 
     @GetMapping
     @Operation(summary = "Get all projects")
-    @PreAuthorize("hasAnyRole('USER, ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public List<ProjectResponseDto> findAllProjects(Authentication authentication,
                                                     Pageable pageable) {
         User user = (User) authentication.getPrincipal();
@@ -43,7 +43,7 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get project details by id")
-    @PreAuthorize("hasAnyRole('USER, ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ProjectResponseDto findProjectById(Authentication authentication,
                                               @PathVariable Long id) {
         User user = (User) authentication.getPrincipal();
@@ -53,7 +53,7 @@ public class ProjectController {
     @PostMapping
     @Operation(summary = "Create a new project")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyRole('USER, ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ProjectResponseDto createNewProject(@RequestBody @Valid ProjectRequestDto requestDto,
                                                Authentication authentication) {
         User user = (User) authentication.getPrincipal();
@@ -67,7 +67,7 @@ public class ProjectController {
                                                 @RequestBody ProjectUpdateDto requestDto,
                                                 Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return projectService.update(requestDto, id, user);
+        return projectService.update(requestDto, id, user.getId());
     }
 
     @DeleteMapping("/{id}")

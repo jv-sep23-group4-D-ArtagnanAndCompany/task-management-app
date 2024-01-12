@@ -12,4 +12,3 @@ databaseChangeLog:
                   constraints:
                     references: users(id)
                     foreignKeyName: fk_user_id_projects
-                    nullable: false
