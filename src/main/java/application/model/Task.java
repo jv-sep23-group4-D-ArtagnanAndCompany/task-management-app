@@ -2,8 +2,6 @@ package application.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,8 +14,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @SQLDelete(sql = "UPDATE tasks SET is_deleted = true WHERE id = ?")
@@ -33,26 +34,23 @@ public class Task {
     private String name;
     @Column(nullable = false)
     private String description;
-    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @Column(nullable = false, columnDefinition = "varchar")
+    @Column(nullable = false)
     private Priority priority;
-    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @Column(nullable = false, columnDefinition = "varchar")
+    @Column(nullable = false)
     private Status status;
     @Column(nullable = false)
+    @CreationTimestamp
     private LocalDate dueDate;
     @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @JoinColumn(nullable = false)
     private Project project;
     @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @JoinColumn(nullable = false)
     private User assignee;
     @Column(nullable = false)
