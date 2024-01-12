@@ -44,7 +44,7 @@ public class LabelController {
         return labelService.getAllByIds(pageable);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update label", description = "Update data about the existing label by ID")
@@ -55,7 +55,7 @@ public class LabelController {
         return labelService.update(labelRequestDto, id);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete label", description = "Mark existing label for deletion by ID")
