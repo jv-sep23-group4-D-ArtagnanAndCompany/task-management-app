@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -39,6 +41,8 @@ public class User implements UserDetails {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
