@@ -28,7 +28,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new task", description = "Create a new task")
     public TaskResponseDto createTask(@RequestBody @Valid TaskRequestDto taskRequestDto) {
@@ -44,7 +44,7 @@ public class TaskController {
     }
 
     @PutMapping("/{taskId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update task status", description = "Update task status")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskResponseDto update(@PathVariable Long taskId,
@@ -53,7 +53,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{taskId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete task by id", description = "Delete task by id")
     public void deleteTask(@PathVariable Long taskId) {
