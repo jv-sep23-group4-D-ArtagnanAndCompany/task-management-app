@@ -19,6 +19,7 @@ public interface TaskMapper {
     default String getStatusFromEnum(Task.Status status) {
         return status.toString();
     }
+
     @Named("getPriorityFromEnum")
     default String getPriorityFromEnum(Task.Priority priority) {
         return priority.toString();
