@@ -20,23 +20,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
+    private static final String CANT_FIND_PROJECT_BY_ID = "Can't find a project with id: ";
+    private static final String CANT_FIND_USER_BY_ID = "Can't find a user with id: ";
+    private static final String CANT_FIND_TASK_BY_ID = "Can't find a task with id: ";
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
-
-    @Transactional
     @Override
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto) {
-        Project project = projectRepository.findById(taskRequestDto.getProjectId()).orElseThrow(
-                () -> new EntityNotFoundException("Can't find a project with id: "
-                        + taskRequestDto.getProjectId()));
-        User assignee = userRepository.findById(taskRequestDto.getAssigneeId()).orElseThrow(
-                () -> new EntityNotFoundException("Can't find a user with id: "
-                        + taskRequestDto.getAssigneeId()));
-        Task savedTask = taskRepository.save(newTask(taskRequestDto, project, assignee));
-
-        return taskMapper.toDto(savedTask);
+        Task task = new Task();
+        Task createdTask = savedTask(taskRequestDto, task);
+        return taskMapper.toDto(createdTask);
     }
 
     @Override
@@ -49,10 +44,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateTaskById(Long taskId, TaskRequestDto taskRequestDto) {
         Task task = taskRepository.findById(taskId).orElseThrow(
-                () -> new EntityNotFoundException("Can't find a task with id: " + taskId));
-        task.setPriority(Task.Priority.valueOf(taskRequestDto.getPriority()));
-        taskRepository.save(task);
-        return taskMapper.toDto(task);
+                () -> new EntityNotFoundException(CANT_FIND_TASK_BY_ID  + taskId));
+        Task updatedTask = savedTask(taskRequestDto, task);
+        return taskMapper.toDto(updatedTask);
     }
 
     @Override
@@ -60,7 +54,7 @@ public class TaskServiceImpl implements TaskService {
         Optional<Task> task = taskRepository.findById(taskId);
         return taskMapper
                 .toDto(task.orElseThrow(() ->
-                        new EntityNotFoundException("Can't find a task with id: " + taskId)));
+                        new EntityNotFoundException(CANT_FIND_TASK_BY_ID  + taskId)));
     }
 
     @Override
@@ -68,9 +62,17 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteById(taskId);
     }
 
-    private Task newTask(TaskRequestDto requestDto, Project project, User assignee) {
-        Task task = new Task();
+    private Task savedTask(TaskRequestDto taskRequestDto, Task task) {
+        Project project = projectRepository.findById(taskRequestDto.getProjectId()).orElseThrow(
+                () -> new EntityNotFoundException(CANT_FIND_PROJECT_BY_ID
+                        + taskRequestDto.getProjectId()));
+        User assignee = userRepository.findById(taskRequestDto.getAssigneeId()).orElseThrow(
+                () -> new EntityNotFoundException(CANT_FIND_USER_BY_ID
+                        + taskRequestDto.getAssigneeId()));
+        return taskRepository.save(newTask(taskRequestDto, project, assignee, task));
+    }
 
+    private Task newTask(TaskRequestDto requestDto, Project project, User assignee, Task task) {
         task.setName(requestDto.getName());
         task.setDescription(requestDto.getDescription());
         task.setPriority(Task.Priority.valueOf(requestDto.getPriority()));

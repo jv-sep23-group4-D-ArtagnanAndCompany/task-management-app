@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new task", description = "Create new task")
     public TaskResponseDto createTask(@RequestBody @Valid TaskRequestDto taskRequestDto) {
@@ -34,6 +36,7 @@ public class TaskController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Get all tasks", description = "Return all tasks")
     public List<TaskResponseDto> getAll(Long projectId) {
@@ -41,6 +44,7 @@ public class TaskController {
     }
 
     @PutMapping("/{taskId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @Operation(summary = "Update task status", description = "Update task status")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskResponseDto update(@PathVariable Long taskId,
@@ -48,14 +52,17 @@ public class TaskController {
         return taskService.updateTaskById(taskId, taskDto);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+
     @DeleteMapping("/{taskId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete task by id", description = "Delete task by id")
     public void deleteTask(@PathVariable Long taskId) {
         taskService.deleteTaskById(taskId);
     }
 
     @GetMapping("/{taskId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Get task by id", description = "Get task by id")
     public TaskResponseDto getTaskById(@PathVariable Long taskId) {
