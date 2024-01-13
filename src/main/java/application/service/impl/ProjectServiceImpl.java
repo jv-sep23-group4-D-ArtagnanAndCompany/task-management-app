@@ -25,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectResponseDto> findAll(Long userId, Pageable pageable) {
-        return projectMapper.toDtoList(projectRepository.findAllByUserId(userId, pageable));
+        return projectMapper.toResponseDtoList(projectRepository.findAllByUserId(userId, pageable));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectRepository.findById(userId, id).orElseThrow(
                 () -> new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id)
         );
-        return projectMapper.toDto(project);
+        return projectMapper.toResponseDto(project);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectMapper.toEntity(requestDto);
         project.setStatus(Project.Status.INITIATED);
         project.setUser(user);
-        return projectMapper.toDto(projectRepository.save(project));
+        return projectMapper.toResponseDto(projectRepository.save(project));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
         project.setStartDate(requestDto.getStartDate());
         project.setEndDate(requestDto.getEndDate());
         project.setStatus(Project.Status.valueOf(requestDto.getStatus()));
-        return projectMapper.toDto(projectRepository.save(project));
+        return projectMapper.toResponseDto(projectRepository.save(project));
     }
 
     @Override
