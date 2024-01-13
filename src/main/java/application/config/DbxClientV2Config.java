@@ -1,6 +1,7 @@
 package application.config;
 
 import com.dropbox.core.DbxRequestConfig;
+import com.dropbox.core.http.StandardHttpRequestor;
 import com.dropbox.core.v2.DbxClientV2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ public class DbxClientV2Config {
     public DbxClientV2 createDbxClientV2() {
         DbxRequestConfig dbxRequestConfig
                 = DbxRequestConfig.newBuilder("dropbox/java-tutorial")
+
                 .build();
         return new DbxClientV2(dbxRequestConfig, dropBoxFileToken);
     }

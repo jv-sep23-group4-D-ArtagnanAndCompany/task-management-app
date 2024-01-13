@@ -24,7 +24,7 @@
             <dependency>
                 <groupId>com.dropbox.core</groupId>
                 <artifactId>dropbox-core-sdk</artifactId>
-                <version>4.0.0</version> <!-- Оновіть версію за потребою -->
+                <version>4.0.0</version>
             </dependency>
         <dependency>
             <groupId>mysql</groupId>

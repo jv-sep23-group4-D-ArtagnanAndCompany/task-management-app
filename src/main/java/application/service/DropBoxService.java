@@ -5,10 +5,13 @@ import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.WriteMode;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,10 +41,15 @@ public class DropBoxService {
         }
     }
 
-    public InputStream downloadFromDropBox(String dropBoxFileId) {
+    public OutputStream downloadFromDropBox(String dropBoxFileId) {
         try {
-            return dbxClientV2.files().download(dropBoxFileId).getInputStream();
-        } catch (DbxException e) {
+            InputStream inputStream
+                    = dbxClientV2.files().download(dropBoxFileId).getInputStream();
+            byte [] bytes = inputStream.readAllBytes();
+            ByteArrayOutputStream byteArrayInputStream = new ByteArrayOutputStream();
+            byteArrayInputStream.write(bytes);
+            return byteArrayInputStream;
+        } catch (DbxException | IOException e) {
             throw new RuntimeException(EXCEPTION_DOWNLOADING + dropBoxFileId);
         }
     }

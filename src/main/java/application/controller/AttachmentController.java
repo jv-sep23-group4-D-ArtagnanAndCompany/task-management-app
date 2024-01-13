@@ -4,11 +4,12 @@ import application.dto.attachment.FileUploadResponseDto;
 import application.service.AttachmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class AttachmentController {
     private final AttachmentService attachmentService;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/{taskId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Upload a file",
@@ -38,10 +40,11 @@ public class AttachmentController {
     }
 
     @GetMapping("/{taskId}")
+    @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all attachments by taskId",
             description = "Endpoint for getting all attachments by taskId")
-    public List<InputStream> retrieveAllByTaskId(@PathVariable Long taskId) {
+    public List<OutputStream> retrieveAllByTaskId(@PathVariable Long taskId) {
         return attachmentService.retrieveAllByTaskId(taskId);
     }
 }

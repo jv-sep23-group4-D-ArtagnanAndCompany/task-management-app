@@ -7,7 +7,7 @@ import application.model.Task;
 import application.repository.AttachmentRepository;
 import application.service.AttachmentService;
 import application.service.DropBoxService;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public List<InputStream> retrieveAllByTaskId(Long taskId) {
+    public List<OutputStream> retrieveAllByTaskId(Long taskId) {
         return attachmentRepository
                 .findAllByTaskId(taskId)
                 .stream()
