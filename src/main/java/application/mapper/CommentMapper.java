@@ -14,7 +14,6 @@ public interface CommentMapper {
     @Mapping(target = "taskId", source = "task.id")
     CommentResponseDto toDto(Comment comment);
 
-    @Mapping(target = "task", ignore = true)
     Comment toEntity(CommentRequestDto requestDto);
 
     List<CommentResponseDto> toDtoList(List<Comment> comments);
