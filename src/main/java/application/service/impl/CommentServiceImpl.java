@@ -23,7 +23,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponseDto> getCommentsByTaskId(Long taskId, Long userId) {
-        return commentMapper.toDtoList(commentRepository.findAllByTaskIdAndUserId(taskId, userId));
+        return commentMapper.toResponseDtoList(commentRepository
+                .findAllByTaskIdAndUserId(taskId, userId));
     }
 
     @Override

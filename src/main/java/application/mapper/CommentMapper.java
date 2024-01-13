@@ -16,5 +16,5 @@ public interface CommentMapper {
 
     Comment toEntity(CommentRequestDto requestDto);
 
-    List<CommentResponseDto> toDtoList(List<Comment> comments);
+    List<CommentResponseDto> toResponseDtoList(List<Comment> comments);
 }
