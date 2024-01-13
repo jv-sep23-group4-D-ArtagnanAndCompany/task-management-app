@@ -1,4 +1,4 @@
-package application.dto.drop_box;
+package application.dto.drop.box;
 
 import lombok.Data;
 

@@ -1,38 +1,47 @@
 package application.controller;
 
-import application.dto.attachment.AttachmentRequestDto;
-import application.dto.attachment.AttachmentResponseDto;
-import application.dto.drop_box.DropBoxFileGetDto;
+import application.dto.attachment.FileUploadResponseDto;
 import application.service.AttachmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import java.io.InputStream;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @RestController
+@Validated
 @Tag(name = "Attachments management", description = "Endpoints for attachments management")
 @RequestMapping("/api/attachments")
 @RequiredArgsConstructor
 public class AttachmentController {
     private final AttachmentService attachmentService;
-    @PostMapping(/{})
+
+    @PostMapping(value = "/{taskId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create a new attachment",
-            description = "Endpoint for creating a new attachment")
-    public AttachmentResponseDto createAttachment(MultipartFile multipartFile) {
-        return attachmentService.createAttachment(requestDto);
+    @Operation(summary = "Upload a file",
+            description = "Endpoint for uploading a file")
+    public FileUploadResponseDto upload(@Validated @RequestParam(name = "file")
+                                                      MultipartFile multipartFile,
+                                        @PathVariable Long taskId) {
+        return attachmentService.upload(taskId, multipartFile);
     }
 
     @GetMapping("/{taskId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all attachments by taskId",
             description = "Endpoint for getting all attachments by taskId")
-    public List<DropBoxFileGetDto> retrieveAllByTaskId(@PathVariable Long taskId) {
+    public List<InputStream> retrieveAllByTaskId(@PathVariable Long taskId) {
         return attachmentService.retrieveAllByTaskId(taskId);
     }
 }

@@ -1,12 +1,12 @@
 package application.service;
 
-import application.dto.attachment.AttachmentRequestDto;
-import application.dto.attachment.AttachmentResponseDto;
-import application.dto.drop_box.DropBoxFileGetDto;
-
+import application.dto.attachment.FileUploadResponseDto;
+import java.io.InputStream;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface AttachmentService {
-    AttachmentResponseDto createAttachment(AttachmentRequestDto attachmentRequestDto);
-    List<DropBoxFileGetDto> retrieveAllByTaskId(Long taskId);
+    FileUploadResponseDto upload(Long taskId, MultipartFile multipartFile);
+
+    List<InputStream> retrieveAllByTaskId(Long taskId);
 }

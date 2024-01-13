@@ -5,9 +5,9 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class AttachmentResponseDto {
+public class FileUploadResponseDto {
     private Long id;
     private String fileName;
     private String dropBoxFileId;
-    private String taskId;
+    private Long taskId;
 }
