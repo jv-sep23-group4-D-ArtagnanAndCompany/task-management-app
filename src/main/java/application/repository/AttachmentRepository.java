@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
-    @Query("SELECT a FROM Attachment a JOIN FETCH a.task t WHERE t.id =: taskId")
+    @Query("SELECT a FROM Attachment a JOIN FETCH a.task t WHERE t.id = :taskId")
     List<Attachment> findAllByTaskId(Long taskId);
 }

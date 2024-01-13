@@ -11,5 +11,6 @@ public interface AttachmentMapper {
     @Mapping(target = "taskId", source = "task.id")
     FileUploadResponseDto toResponseDto(Attachment attachment);
 
+    @Mapping(target = "uploadDate", source = "uploadDate")
     Attachment toEntity(FileUploadResponseDto fileUploadResponseDto);
 }

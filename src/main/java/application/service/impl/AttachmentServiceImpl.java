@@ -7,8 +7,7 @@ import application.model.Task;
 import application.repository.AttachmentRepository;
 import application.service.AttachmentService;
 import application.service.DropBoxService;
-import java.io.OutputStream;
-import java.util.List;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,15 +26,16 @@ public class AttachmentServiceImpl implements AttachmentService {
         Attachment attachment = attachmentMapper.toEntity(fileUploadResponseDto)
                 .setTask(new Task().setId(taskId));
         Attachment savedAttachment = attachmentRepository.save(attachment);
-        return attachmentMapper.toResponseDto(attachment.setId(savedAttachment.getId()));
+        attachment.setId(savedAttachment.getId()).setUploadDate(savedAttachment.getUploadDate());
+        return attachmentMapper.toResponseDto(attachment);
     }
 
     @Override
-    public List<OutputStream> retrieveAllByTaskId(Long taskId) {
-        return attachmentRepository
+    public void retrieveAllByTaskId(Long taskId,
+                                    HttpServletResponse response) {
+        attachmentRepository
                 .findAllByTaskId(taskId)
                 .stream()
-                .map(a -> dropBoxService.downloadFromDropBox(a.getDropBoxFileId()))
-                .toList();
+                .forEach(a -> dropBoxService.downloadFromDropBox(a, response));
     }
 }

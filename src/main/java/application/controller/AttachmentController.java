@@ -4,8 +4,7 @@ import application.dto.attachment.FileUploadResponseDto;
 import application.service.AttachmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.io.OutputStream;
-import java.util.List;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,7 +43,8 @@ public class AttachmentController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all attachments by taskId",
             description = "Endpoint for getting all attachments by taskId")
-    public List<OutputStream> retrieveAllByTaskId(@PathVariable Long taskId) {
-        return attachmentService.retrieveAllByTaskId(taskId);
+    public void retrieveAllByTaskId(@PathVariable Long taskId,
+                                                            HttpServletResponse response) {
+        attachmentService.retrieveAllByTaskId(taskId, response);
     }
 }
