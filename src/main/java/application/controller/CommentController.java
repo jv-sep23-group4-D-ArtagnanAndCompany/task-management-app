@@ -29,7 +29,7 @@ public class CommentController {
 
     @GetMapping()
     @Operation(summary = "Get all comments to the particular task by id")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<CommentResponseDto> getCommentsByTaskId(@RequestParam Long taskId,
                                                        Authentication authentication) {
         User user = (User) authentication.getPrincipal();
@@ -39,7 +39,7 @@ public class CommentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new comment")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public CommentResponseDto createNewComment(@RequestBody CommentRequestDto requestDto,
                                                Authentication authentication) {
         User user = (User) authentication.getPrincipal();
