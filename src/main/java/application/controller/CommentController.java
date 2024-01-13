@@ -7,6 +7,8 @@ import application.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +42,7 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new comment")
     @PreAuthorize("hasRole('ADMIN')")
-    public CommentResponseDto createNewComment(@RequestBody CommentRequestDto requestDto,
+    public CommentResponseDto createNewComment(@RequestBody @Valid CommentRequestDto requestDto,
                                                Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return commentService.save(requestDto, user);
