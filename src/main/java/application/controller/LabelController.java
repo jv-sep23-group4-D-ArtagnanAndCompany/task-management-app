@@ -46,7 +46,7 @@ public class LabelController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update label", description = "Update data about the existing label by ID")
     public LabelResponseDto update(
             @RequestBody @Valid LabelRequestDto labelRequestDto,

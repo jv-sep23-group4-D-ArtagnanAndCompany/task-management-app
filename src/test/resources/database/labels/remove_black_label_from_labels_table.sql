@@ -1,0 +1,1 @@
+delete from labels where id = 6;
