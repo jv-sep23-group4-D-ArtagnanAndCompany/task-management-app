@@ -17,9 +17,9 @@ public class HealthServiceImpl implements HealthService {
     @Override
     public HealthResponseDto checkHealth() {
         if (validateHealth()) {
-            return healthMapper.toDto(STATUS_SUCCESS, HttpStatus.OK);
+            return healthMapper.toResponseDto(STATUS_SUCCESS, HttpStatus.OK);
         } else {
-            return healthMapper.toDto(STATUS_FAILED, HttpStatus.INTERNAL_SERVER_ERROR);
+            return healthMapper.toResponseDto(STATUS_FAILED, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

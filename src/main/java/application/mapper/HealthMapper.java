@@ -7,5 +7,5 @@ import org.springframework.http.HttpStatus;
 
 @Mapper(config = MapperConfig.class)
 public interface HealthMapper {
-    HealthResponseDto toDto(String response, HttpStatus httpStatus);
+    HealthResponseDto toResponseDto(String response, HttpStatus httpStatus);
 }
