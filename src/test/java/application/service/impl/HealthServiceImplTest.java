@@ -21,7 +21,7 @@ public class HealthServiceImplTest {
     @Test
     public void checkHealth_PositiveFlow_ReturnStatusOk() {
         assertEquals(
-                healthMapper.toDto(STATUS_SUCCESS, HttpStatus.OK),
+                healthMapper.toResponseDto(STATUS_SUCCESS, HttpStatus.OK),
                 healthService.checkHealth()
         );
     }

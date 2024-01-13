@@ -1,0 +1,1 @@
+insert into labels (id, name, color) values (6, 'black label', 'black');
