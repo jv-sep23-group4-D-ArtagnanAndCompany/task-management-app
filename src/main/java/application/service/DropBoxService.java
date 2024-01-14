@@ -48,7 +48,7 @@ public class DropBoxService {
             response.setHeader("Filename", attachment.getFileName());
             response.setHeader("DropBoxFileId", attachment.getDropBoxFileId());
             response.setHeader("Cache-Control", "no-cache");
-            byte[] buffer = new byte[4096];
+            byte[] buffer = new byte[8092];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 response.getOutputStream().write(buffer, 0, bytesRead);
