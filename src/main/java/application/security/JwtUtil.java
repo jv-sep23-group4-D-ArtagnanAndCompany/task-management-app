@@ -16,12 +16,12 @@ import org.springframework.stereotype.Component;
 public class JwtUtil {
     private static final String EXCEPTION = "Expired or invalid JWT token";
 
-    @Value("${JWT.EXPIRATION}")
+    @Value("${jwt.expiration}")
     private long expiration;
 
     private Key secret;
 
-    public JwtUtil(@Value("${JWT.SECRET}") String secretString) {
+    public JwtUtil(@Value("${jwt.secret}") String secretString) {
         secret = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
     }
 
