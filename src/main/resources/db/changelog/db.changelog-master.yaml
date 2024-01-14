@@ -33,3 +33,5 @@ databaseChangeLog:
       file: db/changelog/changes/16-add-user-id-column-to-projects-table.yaml
   - include:
       file: db/changelog/changes/17-add-one-more-project-to-projects-table.yaml
+  - include:
+      file: db/changelog/changes/18-create-telegram-chats-table.yaml

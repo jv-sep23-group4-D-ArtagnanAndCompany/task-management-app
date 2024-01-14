@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-telegram-chats-table
+      author: Volodymyr Ozemblovskyi
+      changes:
+        - createTable:
+            tableName: telegram_chats
+            columns:
+              - column:
+                  name: chat_id
+                  type: bigint
+                  constraints:
+                    unique: true
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    references: users(id)
+                    foreignKeyName: fk_telegram_chat_users_id
+                    unique: true
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
