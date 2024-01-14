@@ -18,6 +18,7 @@ public class HealthController {
     private final HealthService healthService;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get health info", description = "Informs that the application is working")
     public HealthResponseDto healthCheck() {
         return healthService.checkHealth();
