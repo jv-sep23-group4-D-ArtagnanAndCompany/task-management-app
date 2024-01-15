@@ -126,6 +126,7 @@ public class TaskServiceImplTest {
             Verify getAll() method
             """)
     void getAll_ValidProjectId_ReturnOneTask() {
+        // when
         when(taskRepository.getAllByProjectId(SECOND_PROJECT_ID))
                 .thenReturn(List.of(task2));
         when(taskMapper.toResponseDto(task2))
@@ -185,7 +186,7 @@ public class TaskServiceImplTest {
         when(taskRepository.save(any(Task.class))).thenReturn(task3);
         when(taskMapper.toResponseDto(task3)).thenReturn(taskResponseDto3);
 
-        // when
+        // then
         TaskResponseDto actual = taskServiceImpl.createTask(taskRequestDto3);
         assertNotNull(actual);
         assertEquals(taskResponseDto3, actual);
@@ -262,6 +263,7 @@ public class TaskServiceImplTest {
                 .setProjectId(FIRST_PROJECT_ID)
                 .setAssigneeId(SECOND_USER_ID);
 
+        // when
         Project project1 = new Project().setId(FIRST_PROJECT_ID);
         when(projectRepository.findById(FIRST_PROJECT_ID)).thenReturn(Optional.of(project1));
 
@@ -269,7 +271,6 @@ public class TaskServiceImplTest {
         when(userRepository.findById(SECOND_USER_ID)).thenReturn(Optional.of(user2));
         when(taskRepository.findById(SECOND_TASK_ID)).thenReturn(Optional.of(updatedTask2));
 
-        // when
         when(taskRepository.save(updatedTask2)).thenReturn(updatedTask2);
         when(taskMapper.toResponseDto(updatedTask2)).thenReturn(updatedTaskResponseDto2);
 
