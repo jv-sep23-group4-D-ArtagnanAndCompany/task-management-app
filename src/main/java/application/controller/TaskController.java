@@ -35,11 +35,11 @@ public class TaskController {
         return taskService.createTask(taskRequestDto);
     }
 
-    @GetMapping
+    @GetMapping(value = "/projectId/{projectId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all tasks", description = "Return all tasks")
-    public List<TaskResponseDto> getAll(Long projectId) {
+    public List<TaskResponseDto> getAll(@PathVariable Long projectId) {
         return taskService.getAll(projectId);
     }
 
