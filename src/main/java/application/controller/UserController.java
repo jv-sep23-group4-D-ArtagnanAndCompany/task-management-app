@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Managing authentication and user registration",
-        description = "Managing authentication and user registration")
+@Tag(name = "Managing user role and profile info",
+        description = "Managing user role and profile info")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
@@ -30,8 +30,9 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update user role",
             description = "Update user role by user id")
-    UserProfileResponseDto updateUserRole(@PathVariable Long id,
-                                          @RequestBody @Valid UpdateRoleRequestDto roleRequestDto
+    UserProfileResponseDto updateUserRole(
+            @PathVariable Long id,
+            @RequestBody @Valid UpdateRoleRequestDto roleRequestDto
     ) {
         return userService.updateRole(id, roleRequestDto);
     }
