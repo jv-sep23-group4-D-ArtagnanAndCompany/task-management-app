@@ -1,5 +1,6 @@
 package application.config;
 
+import application.exception.InitializationException;
 import application.telegram.TelegramBot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -12,6 +13,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 @Component
 @RequiredArgsConstructor
 public class TelegramBotInitializer {
+    private static final String CANT_INITIALIZE = "Can't initialize telegram bot";
     private final TelegramBot bot;
 
     @EventListener({ContextRefreshedEvent.class})
@@ -20,8 +22,7 @@ public class TelegramBotInitializer {
         try {
             telegramBotsApi.registerBot(bot);
         } catch (TelegramApiException e) {
-            //TODO: add catch logic
-            throw new RuntimeException();
+            throw new InitializationException(CANT_INITIALIZE);
         }
     }
 }
