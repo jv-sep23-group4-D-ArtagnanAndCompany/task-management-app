@@ -24,14 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/labels")
 @RequiredArgsConstructor
-@Tag(name = "Label management", description = "Endpoints for manage labels")
+@Tag(name = "Label management", description = "Endpoints for label management")
 public class LabelController {
     private final LabelService labelService;
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create a new label", description = "Create a new label")
+    @Operation(summary = "Create a new label",
+            description = "Endpoint for creating a new label")
     public LabelResponseDto create(@RequestBody @Valid LabelRequestDto labelRequestDto) {
         return labelService.create(labelRequestDto);
     }
@@ -39,7 +40,8 @@ public class LabelController {
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all labels", description = "Get a list of all available labels")
+    @Operation(summary = "Get all labels", description =
+            "Endpoint for getting a list of all available labels")
     public Set<LabelResponseDto> getAll(Pageable pageable) {
         return labelService.getAllByIds(pageable);
     }
@@ -47,7 +49,8 @@ public class LabelController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Update label", description = "Update data about the existing label by ID")
+    @Operation(summary = "Update a label",
+            description = "Endpoint for updating data about the existing label by ID")
     public LabelResponseDto update(
             @RequestBody @Valid LabelRequestDto labelRequestDto,
             @PathVariable Long id
@@ -58,7 +61,8 @@ public class LabelController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete label", description = "Mark existing label for deletion by ID")
+    @Operation(summary = "Delete a label",
+            description = "Endpoint for marking existing label for deletion by ID")
     public void delete(@PathVariable Long id) {
         labelService.deleteById(id);
     }

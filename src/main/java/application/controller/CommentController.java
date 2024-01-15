@@ -23,13 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
-@Tag(name = "Comments management", description = "Endpoints for managing comments")
+@Tag(name = "Comments management", description = "Endpoints for comments management")
 public class CommentController {
 
     private final CommentService commentService;
 
     @GetMapping()
-    @Operation(summary = "Get all comments to the particular task by id")
+    @Operation(summary = "Get all comments to the particular task by id",
+    description = "Endpoint for getting all comments to the particular task by id")
     @PreAuthorize("hasRole('ADMIN')")
     public List<CommentResponseDto> getCommentsByTaskId(@RequestParam Long taskId,
                                                        Authentication authentication) {
@@ -39,7 +40,8 @@ public class CommentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create a new comment")
+    @Operation(summary = "Create a new comment",
+            description = "Endpoint for creating a new comment")
     @PreAuthorize("hasRole('ADMIN')")
     public CommentResponseDto createNewComment(@RequestBody @Valid CommentRequestDto requestDto,
                                                Authentication authentication) {

@@ -23,6 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class HealthControllerTest {
+    private static final String URL = "/api/health";
     protected static MockMvc mockMvc;
 
     @BeforeAll
@@ -37,7 +38,7 @@ public class HealthControllerTest {
     @Test
     @DisplayName("Checking app health")
     public void healthCheck_PositiveFlow_ShouldReturn200() throws Exception {
-        MvcResult result = mockMvc.perform(get("/api/health")
+        MvcResult result = mockMvc.perform(get(URL)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();

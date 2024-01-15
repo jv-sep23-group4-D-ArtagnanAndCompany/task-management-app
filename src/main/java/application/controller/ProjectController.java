@@ -27,13 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/projects")
 @RequiredArgsConstructor
-@Tag(name = "Projects management", description = "Endpoints for managing projects")
+@Tag(name = "Projects management", description = "Endpoints for project management")
 public class ProjectController {
 
     private final ProjectService projectService;
 
     @GetMapping
-    @Operation(summary = "Get all projects")
+    @Operation(summary = "Get all projects",
+            description = "Endpoint for getting all user projects")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public List<ProjectResponseDto> findAllProjects(Authentication authentication,
                                                     Pageable pageable) {
@@ -42,7 +43,8 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get project details by id")
+    @Operation(summary = "Get project details by id",
+    description = "Endpoint for getting all project details by id")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ProjectResponseDto findProjectById(Authentication authentication,
                                               @PathVariable Long id) {
@@ -51,7 +53,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    @Operation(summary = "Create a new project")
+    @Operation(summary = "Create a new project",
+            description = "Endpoint for creating a new project")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ProjectResponseDto createNewProject(@RequestBody @Valid ProjectRequestDto requestDto,
@@ -61,7 +64,8 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update project by id")
+    @Operation(summary = "Update a project by id",
+            description = "Endpoint for updating a project by id")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ProjectResponseDto updateProjectById(@PathVariable Long id,
                                                 @RequestBody ProjectUpdateDto requestDto,
@@ -72,7 +76,8 @@ public class ProjectController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete project by id")
+    @Operation(summary = "Delete a project by id",
+            description = "Endpoint for deleting a project by id")
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteProjectById(@PathVariable Long id) {
         projectService.delete(id);

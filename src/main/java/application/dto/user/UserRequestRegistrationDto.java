@@ -13,11 +13,11 @@ import lombok.experimental.Accessors;
 public class UserRequestRegistrationDto {
     @NotBlank
     private String userName;
-    @Size(min = 8, message = "must be longer")
+    @Size(min = 8, message = " must be longer")
     private String password;
     @NotBlank
     private String repeatedPassword;
-    @Email(message = "is incorrect")
+    @Email(message = " is incorrect")
     private String email;
     @NotBlank
     private String firstName;
