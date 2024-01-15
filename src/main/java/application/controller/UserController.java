@@ -28,8 +28,8 @@ public class UserController {
 
     @PutMapping("/{id}/role")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Update user role",
-            description = "Update user role by user id")
+    @Operation(summary = "Update a user role",
+            description = "Endpoint for updating a user role by user id")
     UserProfileResponseDto updateUserRole(@PathVariable Long id,
                                           @RequestBody @Valid UpdateRoleRequestDto roleRequestDto
     ) {
@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping("/me")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @Operation(summary = "Get user profile info",
-            description = "Get user profile info")
+            description = "Endpoint for getting user profile info")
     UserProfileResponseDto getProfileInfo(Authentication authentication) {
         User user = (User)authentication.getPrincipal();
         return userService.getProfile(user.getId());
@@ -48,7 +48,7 @@ public class UserController {
     @PutMapping("/me")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @Operation(summary = "Update user profile info",
-            description = "Update user profile info")
+            description = "Endpoint for updating user profile info")
     UserProfileResponseDto updateProfileInfo(
             Authentication authentication,
             @RequestBody @Valid UpdateProfileRequestDto profileRequestDto) {
