@@ -40,8 +40,8 @@ public class LabelController {
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all labels", description =
-            "Endpoint for getting a list of all available labels")
+    @Operation(summary = "Get all labels",
+            description = "Endpoint for getting a list of all available labels")
     public Set<LabelResponseDto> getAll(Pageable pageable) {
         return labelService.getAllByIds(pageable);
     }

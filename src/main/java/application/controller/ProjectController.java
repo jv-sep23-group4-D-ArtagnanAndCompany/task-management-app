@@ -44,7 +44,7 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get project details by id",
-    description = "Endpoint for getting all project details by id")
+            description = "Endpoint for getting all project details by id")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ProjectResponseDto findProjectById(Authentication authentication,
                                               @PathVariable Long id) {

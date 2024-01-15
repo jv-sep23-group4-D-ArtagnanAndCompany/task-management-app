@@ -30,7 +30,7 @@ public class CommentController {
 
     @GetMapping()
     @Operation(summary = "Get all comments to the particular task by id",
-    description = "Endpoint for getting all comments to the particular task by id")
+            description = "Endpoint for getting all comments to the particular task by id")
     @PreAuthorize("hasRole('ADMIN')")
     public List<CommentResponseDto> getCommentsByTaskId(@RequestParam Long taskId,
                                                        Authentication authentication) {

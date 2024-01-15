@@ -23,8 +23,8 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class HealthControllerTest {
-    private static final String URL = "/api/health";
     protected static MockMvc mockMvc;
+    private static final String URL = "/api/health";
 
     @BeforeAll
     @SneakyThrows
