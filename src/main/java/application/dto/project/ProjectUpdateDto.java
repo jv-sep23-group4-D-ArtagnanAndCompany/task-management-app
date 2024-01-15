@@ -15,6 +15,6 @@ public class ProjectUpdateDto {
     private LocalDate startDate;
     @NotNull(message = " cannot be null or empty")
     private LocalDate endDate;
-    @NotNull(message = " cannot be null or empty")
+    @NotBlank(message = " cannot be null or empty")
     private String status;
 }
