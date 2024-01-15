@@ -27,7 +27,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Value("${ARRAY_OF_ENDPOINTS}")
+    @Value("${public_endpoints}")
     private String[] publicEndpoints;
 
     @Bean

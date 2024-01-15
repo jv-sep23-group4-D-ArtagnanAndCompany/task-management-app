@@ -15,10 +15,13 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class DropBoxService {
     private static final String EXCEPTION_UPLOADING = "Can't upload a file ";
+    private static final Integer NUMBER_OF_BYTES = 8092;
+    private static final Integer MINUS_ONE = -1;
+    private static final Integer ZERO = 0;
     private static final String EXCEPTION_DOWNLOADING = "Can't download a file by file id ";
     private final DbxClientV2 dbxClientV2;
     @Value("${DROP_BOX_USERS_FILES_PATH}")
@@ -48,10 +51,10 @@ public class DropBoxService {
             response.setHeader("Filename", attachment.getFileName());
             response.setHeader("DropBoxFileId", attachment.getDropBoxFileId());
             response.setHeader("Cache-Control", "no-cache");
-            byte[] buffer = new byte[8092];
+            byte[] buffer = new byte[NUMBER_OF_BYTES];
             int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                response.getOutputStream().write(buffer, 0, bytesRead);
+            while ((bytesRead = inputStream.read(buffer)) != MINUS_ONE) {
+                response.getOutputStream().write(buffer, ZERO, bytesRead);
             }
             response.getOutputStream().flush();
         } catch (DbxException | IOException e) {
