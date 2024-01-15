@@ -24,7 +24,7 @@ public class DropBoxService {
     private static final Integer ZERO = 0;
     private static final String EXCEPTION_DOWNLOADING = "Can't download a file by file id ";
     private final DbxClientV2 dbxClientV2;
-    @Value("${DROP_BOX_USERS_FILES_PATH}")
+    @Value("${drop_box_file_path}")
     private String path;
 
     public FileUploadResponseDto uploadFileToDropBox(MultipartFile multipartFile) {

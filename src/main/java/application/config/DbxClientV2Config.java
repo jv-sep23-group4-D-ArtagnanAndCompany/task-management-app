@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DbxClientV2Config {
-    @Value("${DROP_BOX_ACCESS_TOKEN}")
+    @Value("${drop_box_access_token}")
     private String dropBoxFileToken;
 
     @Bean
