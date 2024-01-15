@@ -39,35 +39,37 @@ public class TaskController {
     @GetMapping(value = "/projectId/{projectId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all tasks by project id", description = "Endpoint for getting all tasks by project id")
+    @Operation(summary = "Get all tasks by project id",
+            description = "Endpoint for getting all tasks by project id")
     public List<TaskResponseDto> getAll(@PathVariable Long projectId) {
+        return taskService.getAll(projectId);
+    }
 
-        @PutMapping("/{taskId}")
-        @PreAuthorize("hasRole('ADMIN')")
-        @Operation(summary = "Update a task status",
-                description = "Endpoint for updating a task status")
-        @ResponseStatus(HttpStatus.CREATED)
-        public TaskResponseDto update (@PathVariable Long taskId,
-                @RequestBody @Valid TaskRequestDto taskDto){
-            return taskService.updateTaskById(taskId, taskDto);
-        }
+    @PutMapping("/{taskId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Update a task status",
+            description = "Endpoint for updating a task status")
+    @ResponseStatus(HttpStatus.CREATED)
+    public TaskResponseDto update(@PathVariable Long taskId,
+                                   @RequestBody @Valid TaskRequestDto taskDto) {
+        return taskService.updateTaskById(taskId, taskDto);
+    }
 
-        @DeleteMapping("/{taskId}")
-        @PreAuthorize("hasRole('ADMIN')")
-        @ResponseStatus(HttpStatus.NO_CONTENT)
-        @Operation(summary = "Delete a task by id",
-                description = "Endpoint for deleting a task by id")
-        public void deleteTask (@PathVariable Long taskId){
-            taskService.deleteTaskById(taskId);
-        }
+    @DeleteMapping("/{taskId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete a task by id",
+            description = "Endpoint for deleting a task by id")
+    public void deleteTask(@PathVariable Long taskId) {
+        taskService.deleteTaskById(taskId);
+    }
 
-        @GetMapping("/{taskId}")
-        @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-        @ResponseStatus(HttpStatus.ACCEPTED)
-        @Operation(summary = "Get a task by id",
-                description = "Endpoint for getting a task by id")
-        public TaskResponseDto getTaskById (@PathVariable Long taskId){
-            return taskService.getTaskById(taskId);
-        }
+    @GetMapping("/{taskId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @Operation(summary = "Get a task by id",
+            description = "Endpoint for getting a task by id")
+    public TaskResponseDto getTaskById(@PathVariable Long taskId) {
+        return taskService.getTaskById(taskId);
     }
 }
