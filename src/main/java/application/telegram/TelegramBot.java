@@ -1,9 +1,7 @@
-package application.service.impl.telegram;
+package application.telegram;
 
 import application.config.TelegramBotConfig;
-import application.model.TelegramChat;
 import application.model.User;
-import application.repository.TelegramChatRepository;
 import application.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +26,9 @@ public class TelegramBot extends TelegramLongPollingBot {
             "It seems that you have already subscribed to receive notifications about your tasks";
     private static final String NON_EXIST_EMAIL =
             "Sorry, no user with this email address was found";
+    private static final Long DEFAULT_EMPTY_CHAT_ID = -1L;
 
     private final TelegramBotConfig telegramBotConfig;
-    private final TelegramChatRepository telegramChatRepository;
     private final UserRepository userRepository;
 
     @Override
@@ -75,19 +73,17 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private void registerUser(Long chatId, String email) {
         Optional<User> userByEmail = userRepository.findUserByEmail(email);
-        if (userByEmail.isEmpty()) {
-            prepareAndSendMessage(chatId, NON_EXIST_EMAIL);
-        } else {
-            Optional<TelegramChat> chatById = telegramChatRepository.findById(chatId);
-            if (chatById.isEmpty()) {
-                TelegramChat chat = new TelegramChat()
-                        .setChatId(chatId)
-                        .setUserId(userByEmail.get().getId());
-                telegramChatRepository.save(chat);
+        if (userByEmail.isPresent()) {
+            User user = userByEmail.get();
+            Long telegramChatId = user.getTelegramChatId();
+            if (telegramChatId.equals(DEFAULT_EMPTY_CHAT_ID)) {
+                userRepository.save(user.setTelegramChatId(chatId));
                 prepareAndSendMessage(chatId, REGISTERED_MESSAGE);
             } else {
                 prepareAndSendMessage(chatId, RE_REGISTRATION_MESSAGE);
             }
+        } else {
+            prepareAndSendMessage(chatId, NON_EXIST_EMAIL);
         }
     }
 }

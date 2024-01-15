@@ -1,8 +1,8 @@
 package application.service.impl;
 
-import application.repository.TelegramChatRepository;
+import application.model.User;
 import application.service.TelegramService;
-import application.service.impl.telegram.TelegramBot;
+import application.telegram.TelegramBot;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,18 +11,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TelegramServiceImpl implements TelegramService {
     private final TelegramBot telegramBot;
-    private final TelegramChatRepository telegramChatRepository;
 
     @Override
-    public void sendNotificationToGroup(String messageText, List<Long> usersIds) {
-        for (Long id : usersIds) {
-            sendNotification(messageText, id);
+    public void sendNotificationToGroup(String messageText, List<User> users) {
+        for (User user : users) {
+            sendNotification(messageText, user);
         }
     }
 
     @Override
-    public void sendNotification(String messageText, Long userId) {
-        telegramChatRepository.findByUserId(userId).ifPresent(telegramChat ->
-                telegramBot.prepareAndSendMessage(telegramChat.getChatId(), messageText));
+    public void sendNotification(String messageText, User user) {
+        telegramBot.prepareAndSendMessage(user.getTelegramChatId(), messageText);
     }
 }

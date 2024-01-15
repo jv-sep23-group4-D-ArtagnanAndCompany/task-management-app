@@ -1,6 +1,6 @@
 package application.config;
 
-import application.service.impl.telegram.TelegramBot;
+import application.telegram.TelegramBot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;

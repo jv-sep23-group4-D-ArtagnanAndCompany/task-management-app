@@ -1,11 +1,16 @@
 package application.config;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @Data
+@PropertySource("application.properties")
 public class TelegramBotConfig {
-    private String botName = "DA_task_manager_bot";
-    private String token = "6922423500:AAERt55PLpi6pWgDN5KwrhTyd_oxOh_jesg";
+    @Value("${TELEGRAM_BOT_NAME}")
+    private String botName;
+    @Value("${TELEGRAM_BOT_TOKEN}")
+    private String token;
 }

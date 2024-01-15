@@ -1,9 +1,10 @@
 package application.service;
 
+import application.model.User;
 import java.util.List;
 
 public interface TelegramService {
-    void sendNotificationToGroup(String messageText, List<Long> usersIds);
+    void sendNotificationToGroup(String messageText, List<User> users);
 
-    void sendNotification(String messageText, Long userId);
+    void sendNotification(String messageText, User user);
 }
