@@ -48,8 +48,16 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleSet = new HashSet<>();
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Column(unique = true)
+    private Long telegramChatId;
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    public Long getTelegramChatId() {
+        return telegramChatId == null ? -1 : telegramChatId;
+    }
 
     public String getUserName() {
         return userName;

@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-one-more-project-to-projects-table
+      author: rostyslav_kuzmych
+      changes:
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: name
+                  value: Cool Project
+              - column:
+                  name: description
+                  value: Cool project description
+              - column:
+                  name: start_date
+                  value: '2024-02-11'
+              - column:
+                  name: end_date
+                  value: '2024-05-31'
+              - column:
+                  name: status
+                  value: IN_PROGRESS

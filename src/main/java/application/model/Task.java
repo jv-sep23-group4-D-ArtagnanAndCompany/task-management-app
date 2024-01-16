@@ -9,12 +9,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -44,8 +44,8 @@ public class Task {
     @EqualsAndHashCode.Exclude
     @Column(nullable = false)
     private Status status;
+    @Future
     @Column(nullable = false)
-    @CreationTimestamp
     private LocalDate dueDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)

@@ -1,0 +1,14 @@
+
+databaseChangeLog:
+  - changeSet:
+      id: modify_project_1
+      author: andriy_hrynevetskyi
+      changes:
+        - update:
+            tableName: projects
+            columns:
+              - column:
+                  name: user_id
+                  value: 1
+            where: id = 1
+

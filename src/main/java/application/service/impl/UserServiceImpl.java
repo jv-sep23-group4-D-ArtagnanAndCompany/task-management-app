@@ -25,11 +25,13 @@ public class UserServiceImpl implements UserService {
     private static final Long USER_ROLE_ID = 2L;
     private static final String CANT_FIND_BY_ID = "User with id %s is not found";
     private static final String EMAIL_RESERVED = "User with email %s already exists";
+    private static final String ROLE_NOT_FOUND = "Role with name %s isn't found";
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
+    @Override
     public UserResponseDto register(
             UserRequestRegistrationDto userRequestRegistrationDto) {
         if (userRepository.findUserByEmail(userRequestRegistrationDto.getEmail()).isPresent()) {
@@ -49,7 +51,9 @@ public class UserServiceImpl implements UserService {
     public UserProfileResponseDto updateRole(Long id, UpdateRoleRequestDto roleRequestDto) {
         User userFromDb = getUserFromDb(id);
         Set<Role> roleSet = userFromDb.getRoleSet();
-        Role role = roleRepository.findRoleByRoleName(roleRequestDto.getRoleName()).orElseGet(null);
+        Role role = roleRepository.findRoleByRoleName(roleRequestDto.getRoleName())
+                .orElseThrow(() -> new EntityNotFoundException(String.format(
+                        ROLE_NOT_FOUND, roleRequestDto.getRoleName())));
         roleSet.add(role);
         userFromDb.setRoleSet(roleSet);
         userRepository.save(userFromDb);

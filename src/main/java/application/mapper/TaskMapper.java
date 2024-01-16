@@ -1,6 +1,7 @@
 package application.mapper;
 
 import application.config.MapperConfig;
+import application.dto.task.TaskRequestDto;
 import application.dto.task.TaskResponseDto;
 import application.model.Task;
 import org.mapstruct.Mapper;
@@ -14,6 +15,8 @@ public interface TaskMapper {
     @Mapping(target = "status", source = "status", qualifiedByName = "getStatusFromEnum")
     @Mapping(target = "priority", source = "priority", qualifiedByName = "getPriorityFromEnum")
     TaskResponseDto toResponseDto(Task task);
+
+    Task toEntity(TaskRequestDto taskRequestDto);
 
     @Named("getStatusFromEnum")
     default String getStatusFromEnum(Task.Status status) {
