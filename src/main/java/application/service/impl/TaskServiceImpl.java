@@ -11,6 +11,7 @@ import application.repository.ProjectRepository;
 import application.repository.TaskRepository;
 import application.repository.UserRepository;
 import application.service.TaskService;
+import application.service.TelegramService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +27,15 @@ public class TaskServiceImpl implements TaskService {
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final TelegramService telegramService;
 
     @Override
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto) {
         Task task = new Task();
         Task createdTask = savedTask(taskRequestDto, task);
+        telegramService.sendNotification("A new task has been "
+                + "added to your project "
+                + createdTask.getProject().getName(), createdTask.getAssignee());
         return taskMapper.toResponseDto(createdTask);
     }
 
@@ -46,6 +51,9 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(taskId).orElseThrow(
                 () -> new EntityNotFoundException(CANT_FIND_TASK_BY_ID + taskId));
         Task updatedTask = savedTask(taskRequestDto, task);
+        telegramService.sendNotification(String.format("A task %s has been updated",
+                        updatedTask.getName()),
+                updatedTask.getAssignee());
         return taskMapper.toResponseDto(updatedTask);
     }
 
@@ -69,7 +77,9 @@ public class TaskServiceImpl implements TaskService {
         User assignee = userRepository.findById(taskRequestDto.getAssigneeId()).orElseThrow(
                 () -> new EntityNotFoundException(CANT_FIND_USER_BY_ID
                         + taskRequestDto.getAssigneeId()));
-        return taskRepository.save(newTask(taskRequestDto, project, assignee, task));
+        Task savedTask = newTask(taskRequestDto, project, assignee, task);
+        taskRepository.save(savedTask);
+        return savedTask;
     }
 
     private Task newTask(TaskRequestDto requestDto, Project project, User assignee, Task task) {

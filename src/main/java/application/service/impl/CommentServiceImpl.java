@@ -9,7 +9,9 @@ import application.model.Task;
 import application.model.User;
 import application.repository.CommentRepository;
 import application.repository.TaskRepository;
+import application.repository.UserRepository;
 import application.service.CommentService;
+import application.service.TelegramService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
+    private final TelegramService telegramService;
+    private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final TaskRepository taskRepository;
@@ -37,6 +41,13 @@ public class CommentServiceImpl implements CommentService {
                                 "Can't find task with given id: " + taskId));
         comment.setTask(task);
         comment.setUser(user);
+        User assigneeUser = userRepository.findUserById(task.getAssignee().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Can't find user with given id: "
+                        + task.getAssignee().getId()));
+        telegramService.sendNotification("A new comment has been "
+                        + "added to your task "
+                        + task.getName(),
+                assigneeUser);
         return commentMapper.toDto(commentRepository.save(comment));
     }
 }

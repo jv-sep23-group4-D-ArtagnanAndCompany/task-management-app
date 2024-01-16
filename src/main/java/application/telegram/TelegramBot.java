@@ -48,7 +48,6 @@ public class TelegramBot extends TelegramLongPollingBot {
             Message message = update.getMessage();
             String messageText = message.getText();
             Long chatId = message.getChatId();
-
             if (messageText.matches(EMAIL_REGEX)) {
                 registerUser(chatId, messageText);
             } else if (messageText.equals(START_COMMAND)) {
