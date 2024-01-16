@@ -36,10 +36,10 @@ public class TaskController {
         return taskService.createTask(taskRequestDto);
     }
 
-    @GetMapping(value = "/projectId/{projectId}")
+    @GetMapping("/projectId/{projectId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all tasks by project id",
+    @Operation(summary = "Get all tasks",
             description = "Endpoint for getting all tasks by project id")
     public List<TaskResponseDto> getAll(@PathVariable Long projectId) {
         return taskService.getAll(projectId);
@@ -51,7 +51,7 @@ public class TaskController {
             description = "Endpoint for updating a task status")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskResponseDto update(@PathVariable Long taskId,
-                                   @RequestBody @Valid TaskRequestDto taskDto) {
+                                  @RequestBody @Valid TaskRequestDto taskDto) {
         return taskService.updateTaskById(taskId, taskDto);
     }
 
@@ -66,7 +66,7 @@ public class TaskController {
 
     @GetMapping("/{taskId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get a task by id",
             description = "Endpoint for getting a task by id")
     public TaskResponseDto getTaskById(@PathVariable Long taskId) {

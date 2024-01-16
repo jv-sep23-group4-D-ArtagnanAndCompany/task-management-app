@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,6 +67,8 @@ public class TaskServiceImplTest {
     private static List<Task> tasks;
     private static List<TaskResponseDto> taskResponseDtos;
 
+    @Mock
+    private TelegramServiceImpl telegramServiceImpl;
     @Mock
     private TaskRepository taskRepository;
     @Mock
@@ -184,6 +188,8 @@ public class TaskServiceImplTest {
 
         // when
         when(taskRepository.save(any(Task.class))).thenReturn(task3);
+        Mockito.doNothing().when(telegramServiceImpl).sendNotification(anyString(),
+                any(User.class));
         when(taskMapper.toResponseDto(task3)).thenReturn(taskResponseDto3);
 
         // then
@@ -264,6 +270,8 @@ public class TaskServiceImplTest {
                 .setAssigneeId(SECOND_USER_ID);
 
         // when
+        Mockito.doNothing().when(telegramServiceImpl).sendNotification(anyString(),
+                any(User.class));
         Project project1 = new Project().setId(FIRST_PROJECT_ID);
         when(projectRepository.findById(FIRST_PROJECT_ID)).thenReturn(Optional.of(project1));
 

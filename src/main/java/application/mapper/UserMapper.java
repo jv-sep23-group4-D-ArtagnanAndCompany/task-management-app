@@ -19,12 +19,11 @@ public interface UserMapper {
 
     UserResponseDto toResponseDto(User user);
 
-    @Mapping(target = "roleIds", source = "roleSet", qualifiedByName = "getIdsByRoles")
+    @Mapping(target = "roleIds", source = "roleSet", qualifiedByName = "toSetIds")
     UserProfileResponseDto toResponseDtoWithRoles(User user);
 
-    @Mapping(target = "roleIds", source = "roleSet", qualifiedByName = "getIdsByRoles")
-    @Named(value = "getIdsByRoles")
-    default Set<Long> bookByBookId(Set<Role> roleSet) {
+    @Named(value = "toSetIds")
+    default Set<Long> toSetIds(Set<Role> roleSet) {
         return roleSet.stream().map(Role::getId).collect(Collectors.toSet());
     }
 }

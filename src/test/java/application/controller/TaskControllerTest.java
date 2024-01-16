@@ -1,6 +1,8 @@
 package application.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -10,6 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import application.dto.task.TaskRequestDto;
 import application.dto.task.TaskResponseDto;
+import application.model.User;
+import application.service.impl.TelegramServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
@@ -18,8 +22,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
@@ -69,6 +75,8 @@ public class TaskControllerTest {
     private static final String ADMIN = "admin";
     private static List<TaskResponseDto> taskResponseDtos;
 
+    @MockBean
+    private TelegramServiceImpl telegramServiceImpl;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -108,6 +116,8 @@ public class TaskControllerTest {
     @WithMockUser(username = ADMIN, roles = USER_ROLE)
     void create_ValidRequestDto_ReturnResponseDto() throws Exception {
         // given
+        Mockito.doNothing().when(telegramServiceImpl).sendNotification(anyString(),
+                any(User.class));
         TaskRequestDto taskRequestDto = new TaskRequestDto()
                 .setName(TASK3_NAME)
                 .setDescription(TASK3_DESCRIPTION)
@@ -187,6 +197,8 @@ public class TaskControllerTest {
     @WithMockUser(username = ADMIN, roles = USER_ROLE)
     void update_ValidRequestDto_ReturnResponseDto() throws Exception {
         // given
+        Mockito.doNothing().when(telegramServiceImpl).sendNotification(anyString(),
+                any(User.class));
         TaskRequestDto taskRequestDto3 = new TaskRequestDto()
                 .setName(UPDATED_TASK3_NAME)
                 .setDescription(UPDATED_TASK3_DESCRIPTION)
