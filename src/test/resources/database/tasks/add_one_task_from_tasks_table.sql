@@ -1,1 +1,1 @@
-insert into tasks (id, name, description, priority, status, due_date, project_id, assignee_id) values (6, 'test_task', 'test task description', 'HIGH', 'IN_PROGRESS', '2024-03-01', '2024-01-20', 6, 1);
+insert into tasks (id, name, description, priority, status, due_date, project_id, assignee_id) values (6, 'test_task', 'test task description', 'HIGH', 'IN_PROGRESS', '2024-03-01', 6, 1);
