@@ -66,7 +66,7 @@ public class TaskController {
 
     @GetMapping("/{taskId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get a task by id",
             description = "Endpoint for getting a task by id")
     public TaskResponseDto getTaskById(@PathVariable Long taskId) {

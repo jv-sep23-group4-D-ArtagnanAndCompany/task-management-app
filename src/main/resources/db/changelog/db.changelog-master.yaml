@@ -28,15 +28,16 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/14-insert_sample_project.yaml
   - include:
-      file: db/changelog/changes/15-insert-tasks-to-tasks-table.yaml
+      file: db/changelog/changes/15-add-user-id-column-to-projects-table.yaml
   - include:
-      file: db/changelog/changes/16-add-user-id-column-to-projects-table.yaml
+      file: db/changelog/changes/16-add-one-more-project-to-projects-table.yaml
   - include:
-      file: db/changelog/changes/17-add-one-more-project-to-projects-table.yaml
+      file: db/changelog/changes/17-insert-tasks-to-tasks-table.yaml
   - include:
       file: db/changelog/changes/18-add-column-telegram-chat-id-to-users-table.yaml
   - include:
       file: db/changelog/changes/19-set-user-id-to-project.yaml
   - include:
       file: db/changelog/changes/20-add-constraint-to-projects-table-user-id-column.yaml
+
 

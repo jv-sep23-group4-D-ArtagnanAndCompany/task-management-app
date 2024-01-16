@@ -80,9 +80,9 @@ public class TaskServiceImpl implements TaskService {
         User assignee = userRepository.findById(taskRequestDto.getAssigneeId()).orElseThrow(
                 () -> new EntityNotFoundException(CANT_FIND_USER_BY_ID
                         + taskRequestDto.getAssigneeId()));
-        Task savedTask = newTask(taskRequestDto, project, assignee, task);
-        taskRepository.save(savedTask);
-        return savedTask;
+        Task createdTask = newTask(taskRequestDto, project, assignee, task);
+        Task savedTask = taskRepository.save(createdTask);
+        return createdTask.setId(savedTask.getId());
     }
 
     private Task newTask(TaskRequestDto requestDto, Project project, User assignee, Task task) {
