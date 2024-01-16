@@ -14,7 +14,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -45,7 +44,6 @@ public class Task {
     @Column(nullable = false)
     private Status status;
     @Column(nullable = false)
-    @CreationTimestamp
     private LocalDate dueDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)

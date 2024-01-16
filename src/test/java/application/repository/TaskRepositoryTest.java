@@ -25,8 +25,6 @@ import org.springframework.test.context.jdbc.Sql;
 @DisplayName("""
             Verify create() method
             """)
-@Sql(scripts = "classpath:database/tasks/remove_one_task_from_tasks_table.sql",
-        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class TaskRepositoryTest {
     private static final String TASK1_NAME = "Task 1";
     private static final String TASK1_DESCRIPTION = "Description 1";
