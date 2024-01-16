@@ -11,3 +11,4 @@ databaseChangeLog:
                   name: user_id
                   value: 1
             where: id = 1
+

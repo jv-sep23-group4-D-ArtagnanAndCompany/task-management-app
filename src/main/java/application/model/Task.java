@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,6 +44,7 @@ public class Task {
     @EqualsAndHashCode.Exclude
     @Column(nullable = false)
     private Status status;
+    @Future
     @Column(nullable = false)
     private LocalDate dueDate;
     @ManyToOne(fetch = FetchType.LAZY)
