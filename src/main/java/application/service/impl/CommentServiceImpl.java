@@ -12,6 +12,7 @@ import application.repository.TaskRepository;
 import application.repository.UserRepository;
 import application.service.CommentService;
 import application.service.TelegramService;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class CommentServiceImpl implements CommentService {
                 .findAllByTaskIdAndUserId(taskId, userId));
     }
 
+    @Transactional
     @Override
     public CommentResponseDto save(CommentRequestDto requestDto, User user) {
         Comment comment = commentMapper.toEntity(requestDto);

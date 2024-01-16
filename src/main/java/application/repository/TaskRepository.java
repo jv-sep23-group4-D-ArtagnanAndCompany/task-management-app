@@ -12,5 +12,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> getAllByProjectId(Long projectId);
 
     @EntityGraph(attributePaths = "assignee")
-    List<Task> getAllByDueDateBetween(LocalDate from, LocalDate to);
+    List<Task> getAllByDueDateBetweenAndStatusIsNot(LocalDate from, LocalDate to,
+                                                    Task.Status status);
 }

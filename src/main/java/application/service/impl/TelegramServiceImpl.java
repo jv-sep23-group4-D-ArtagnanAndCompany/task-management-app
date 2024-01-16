@@ -1,5 +1,6 @@
 package application.service.impl;
 
+import application.model.Task;
 import application.model.User;
 import application.repository.TaskRepository;
 import application.service.TelegramService;
@@ -19,8 +20,8 @@ public class TelegramServiceImpl implements TelegramService {
     @Override
     @Scheduled(cron = "0 0 15 * * *")
     public void sendNotificationsAboutDeadlines() {
-        taskRepository.getAllByDueDateBetween(LocalDate.now(),
-                        LocalDate.now().plusDays(2))
+        taskRepository.getAllByDueDateBetweenAndStatusIsNot(LocalDate.now(),
+                        LocalDate.now().plusDays(2), Task.Status.COMPLETED)
                 .stream().forEach(task -> {
                     User user = task.getAssignee();
                     sendNotification(String.format("Deadline for the task %s is %s!",

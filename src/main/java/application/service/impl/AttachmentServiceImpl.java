@@ -8,6 +8,7 @@ import application.repository.AttachmentRepository;
 import application.service.AttachmentService;
 import application.service.DropBoxService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     private final DropBoxService dropBoxService;
 
     @Override
+    @Transactional
     public FileUploadResponseDto upload(Long taskId, MultipartFile multipartFile) {
         FileUploadResponseDto fileUploadResponseDto = dropBoxService
                 .uploadFileToDropBox(multipartFile);

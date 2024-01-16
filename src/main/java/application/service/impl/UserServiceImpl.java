@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
+    @Override
     public UserResponseDto register(
             UserRequestRegistrationDto userRequestRegistrationDto) {
         if (userRepository.findUserByEmail(userRequestRegistrationDto.getEmail()).isPresent()) {
