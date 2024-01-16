@@ -33,3 +33,8 @@ databaseChangeLog:
       file: db/changelog/changes/16-add-one-more-project-to-projects-table.yaml
   - include:
       file: db/changelog/changes/17-insert-tasks-to-tasks-table.yaml
+  - include:
+      file: db/changelog/changes/18-set-user-id-to-project.yaml
+  - include:
+      file: db/changelog/changes/19-add-constraint-to-projects-table-user-id-column.yaml
+
