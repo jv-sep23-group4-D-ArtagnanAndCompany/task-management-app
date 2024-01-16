@@ -1,0 +1,1 @@
+insert into projects (id, name, description, user_id, start_date, end_date, status) values (6, 'test_project', 'test project description', 1, '2024-01-01', '2024-01-20', 'COMPLETED');

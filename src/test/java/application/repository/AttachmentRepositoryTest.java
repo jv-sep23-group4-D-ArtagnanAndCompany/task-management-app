@@ -14,15 +14,23 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
+@Sql(scripts = "classpath:database/projects/add_one_project_to_projects_table.sql",
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(scripts = "classpath:database/tasks/add_one_task_from_tasks_table.sql",
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Sql(scripts = "classpath:database/attachments/add_three_attachments_to_attachments_table.sql",
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Sql(scripts = "classpath:database/attachments/remove_three_attachments_from_attachments_table.sql",
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
+@Sql(scripts = "classpath:database/tasks/remove_one_task.sql",
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
+@Sql(scripts = "classpath:database/projects/remove_one_project.sql",
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AttachmentRepositoryTest {
     private static List<Attachment> attachmentList;
-    private static final Long VALID_TASK_ID = 1L;
+    private static final Long VALID_TASK_ID = 6L;
     private static final Long INVALID_TASK_ID = 200L;
     @Autowired
     private AttachmentRepository attachmentRepository;
@@ -30,13 +38,13 @@ class AttachmentRepositoryTest {
     @BeforeAll
     static void beforeAll() {
         Attachment firstAttachment = new Attachment()
-                .setId(1L).setTask(new Task().setId(1L)).setFileName("test1.txt")
+                .setId(1L).setTask(new Task().setId(6L)).setFileName("test1.txt")
                 .setDropBoxFileId("sdsdgsgsdggsfgsd");
         Attachment secondAttachment = new Attachment()
-                .setId(2L).setTask(new Task().setId(1L)).setFileName("test2.txt")
+                .setId(2L).setTask(new Task().setId(6L)).setFileName("test2.txt")
                 .setDropBoxFileId("sdsdgsgsdggsfgsdtg");
         Attachment thirdAttachment = new Attachment()
-                .setId(3L).setTask(new Task().setId(1L)).setFileName("test3.txt")
+                .setId(3L).setTask(new Task().setId(6L)).setFileName("test3.txt")
                 .setDropBoxFileId("sddkfgksdjgkdkghd");
         attachmentList = List.of(firstAttachment, secondAttachment, thirdAttachment);
     }
