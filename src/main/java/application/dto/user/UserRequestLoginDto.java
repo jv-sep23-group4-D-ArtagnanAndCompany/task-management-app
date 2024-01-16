@@ -8,8 +8,8 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class UserRequestLoginDto {
-    @Email(message = "is incorrect")
+    @Email(message = " is incorrect")
     private String email;
-    @Size(min = 8, message = "must be longer")
+    @Size(min = 8, message = " must be longer")
     private String password;
 }
