@@ -26,6 +26,9 @@ services:
               "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC",
               "spring.datasource.username" : "$MYSQLDB_USER",
               "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+              "spring.liquibase.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC",
+              "spring.liquibase.user" : "$MYSQLDB_USER",
+              "spring.liquibase.password" : "$MYSQLDB_ROOT_PASSWORD",
               "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
               "spring.jpa.hibernate.ddl-auto" : "validate"
             }'
