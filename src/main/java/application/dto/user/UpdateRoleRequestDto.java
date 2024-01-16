@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class UpdateRoleRequestDto {
-    @NotNull(message = "Can't be empty")
+    @NotNull(message = " can't be empty")
     private Role.RoleName roleName;
 }
