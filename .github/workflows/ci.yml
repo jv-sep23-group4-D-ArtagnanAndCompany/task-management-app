@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      telegram_bot_name: ${{ secrets.TELEGRAM_BOT_NAME }}
+      telegram_bot_token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
