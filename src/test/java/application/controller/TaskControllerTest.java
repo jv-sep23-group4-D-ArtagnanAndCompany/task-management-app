@@ -163,7 +163,7 @@ public class TaskControllerTest {
         List<TaskResponseDto> actual = objectMapper.readValue(mvcResult
                         .getResponse().getContentAsString(),
                 new TypeReference<List<TaskResponseDto>>() {});
-        Assertions.assertEquals(expected.size() - 1, actual.size());
+        Assertions.assertEquals(expected.size(), actual.size());
         EqualsBuilder.reflectionEquals(expected, actual, EXCLUDE_FIELD_ID);
     }
 
@@ -250,7 +250,7 @@ public class TaskControllerTest {
                         .getResponse().getContentAsString(),
                 new TypeReference<List<TaskResponseDto>>() {});
 
-        assertEquals(expected.size() - 1, actual.size());
+        assertEquals(expected.size(), actual.size());
         EqualsBuilder.reflectionEquals(expected, actual, EXCLUDE_FIELD_ID);
     }
 }
