@@ -2,6 +2,7 @@ package application.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -13,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import application.dto.task.TaskRequestDto;
 import application.dto.task.TaskResponseDto;
 import application.model.User;
-import application.service.impl.TelegramServiceImpl;
+import application.service.TelegramService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
@@ -41,10 +42,9 @@ import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TaskControllerTest {
     protected static MockMvc mockMvc;
-
     private static final String EXCLUDE_FIELD_DUE_DATE = "dueDate";
     private static final String EXCLUDE_FIELD_ID = "id";
-    private static final String PARAMETER_URL_PROJECT_ID_1 = "/projectId" + "/1";
+    private static final String PARAMETER_URL_PROJECT_ID_1 = "?projectId" + "=1";
     private static final String PARAMETER_URL_TASK_ID_1 = "/1";
     private static final String PARAMETER_URL_TASK_ID_4 = "/4";
     private static final String PARAMETER_URL_TASK_ID_5 = "/5";
@@ -74,9 +74,8 @@ public class TaskControllerTest {
     private static final String USER_ROLE = "ADMIN";
     private static final String ADMIN = "admin";
     private static List<TaskResponseDto> taskResponseDtos;
-
     @MockBean
-    private TelegramServiceImpl telegramServiceImpl;
+    private TelegramService telegramService;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -116,8 +115,8 @@ public class TaskControllerTest {
     @WithMockUser(username = ADMIN, roles = USER_ROLE)
     void create_ValidRequestDto_ReturnResponseDto() throws Exception {
         // given
-        Mockito.doNothing().when(telegramServiceImpl).sendNotification(anyString(),
-                any(User.class));
+        Mockito.doNothing().when(telegramService).sendNotification(anyString(),
+                any(User.class), anyLong());
         TaskRequestDto taskRequestDto = new TaskRequestDto()
                 .setName(TASK3_NAME)
                 .setDescription(TASK3_DESCRIPTION)
@@ -197,8 +196,8 @@ public class TaskControllerTest {
     @WithMockUser(username = ADMIN, roles = USER_ROLE)
     void update_ValidRequestDto_ReturnResponseDto() throws Exception {
         // given
-        Mockito.doNothing().when(telegramServiceImpl).sendNotification(anyString(),
-                any(User.class));
+        Mockito.doNothing().when(telegramService).sendNotification(anyString(),
+                any(User.class), anyLong());
         TaskRequestDto taskRequestDto3 = new TaskRequestDto()
                 .setName(UPDATED_TASK3_NAME)
                 .setDescription(UPDATED_TASK3_DESCRIPTION)

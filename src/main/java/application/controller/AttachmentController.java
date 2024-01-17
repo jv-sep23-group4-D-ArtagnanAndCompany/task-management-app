@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,22 +27,22 @@ public class AttachmentController {
     private final AttachmentService attachmentService;
 
     @PreAuthorize("hasRole('USER')")
-    @PostMapping(value = "/{taskId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Upload a file",
             description = "Endpoint for uploading a file")
     public FileUploadResponseDto upload(@Validated @RequestParam(name = "file")
                                                       MultipartFile multipartFile,
-                                        @PathVariable Long taskId) {
+                                        @RequestParam Long taskId) {
         return attachmentService.upload(taskId, multipartFile);
     }
 
-    @GetMapping("/{taskId}")
+    @GetMapping
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all attachments by taskId",
             description = "Endpoint for getting all attachments by taskId")
-    public void retrieveAllByTaskId(@PathVariable Long taskId,
+    public void retrieveAllByTaskId(@RequestParam Long taskId,
                                                             HttpServletResponse response) {
         attachmentService.retrieveAllByTaskId(taskId, response);
     }

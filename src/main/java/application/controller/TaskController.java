@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,12 +37,12 @@ public class TaskController {
         return taskService.createTask(taskRequestDto);
     }
 
-    @GetMapping("/projectId/{projectId}")
+    @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all tasks",
             description = "Endpoint for getting all tasks by project id")
-    public List<TaskResponseDto> getAll(@PathVariable Long projectId) {
+    public List<TaskResponseDto> getAll(@RequestParam Long projectId) {
         return taskService.getAll(projectId);
     }
 

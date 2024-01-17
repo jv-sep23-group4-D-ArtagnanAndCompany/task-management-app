@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TelegramServiceImpl implements TelegramService {
+    private static final String DEADLINE_MESSAGE = "Deadline for the task %s with id %s is %s!";
     private final TelegramBot telegramBot;
     private final TaskRepository taskRepository;
 
@@ -24,16 +25,21 @@ public class TelegramServiceImpl implements TelegramService {
                         LocalDate.now().plusDays(2), Task.Status.COMPLETED)
                 .stream().forEach(task -> {
                     User user = task.getAssignee();
-                    sendNotification(String.format("Deadline for the task %s is %s!",
+                    sendNotification(String.format(DEADLINE_MESSAGE,
                             task.getName(), task.getDueDate()), user);
                 });
     }
 
     @Override
-    public void sendNotificationToGroup(String messageText, List<User> users) {
+    public void sendNotificationToGroup(String messageText, List<User> users, Long id) {
         for (User user : users) {
-            sendNotification(messageText, user);
+            sendNotification(messageText, user, id);
         }
+    }
+
+    @Override
+    public void sendNotification(String messageText, User user, Long id) {
+        telegramBot.prepareAndSendMessage(user.getTelegramChatId(), messageText, id);
     }
 
     @Override
