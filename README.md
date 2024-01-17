@@ -59,13 +59,13 @@ ___
     - DELETE: /api/labels/{id} - Delete label
 ___
 ## 👨‍🚀 Ability to send requests to the endpoints by Postman 👨‍🚀
-Moreover, you can try sending requests to the endpoints using Postman by clicking [here](https://www.google.com/webhp?hl=uk&sa=X&ved=0ahUKEwi4pcyrpuCDAxVxExAIHdDJBR8QPAgJ).
+Moreover, you can try sending requests to the endpoints using Postman by clicking [here](https://www.postman.com/lunar-module-cosmologist-43034160/workspace/my-projects/collection/31108999-59b72060-37e1-4d64-a2b3-82b649343457?action=share&creator=31108999).
 It's a collection of prepared requests where you can test functionality of the controllers.
 Here are all endpoints, to which users can send requests. Log in and registration endpoints don't need a token, but the others do.
 Firstly, you need to register if you haven't already. Next, you'll need to log in to obtain a token.
 After that, you must pass the token in the header authorization in the Bearer Token field.
 To elaborate on that, I recorded a video where I showed how all endpoints work, including endpoints, which are accessible for administrators.
-You can watch it by clicking [here](https://www.google.com/webhp?hl=uk&sa=X&ved=0ahUKEwi4pcyrpuCDAxVxExAIHdDJBR8QPAgJ) 😊🎥.
+You can watch it by clicking [here](https://www.loom.com/share/53573f09fe684103896f3e9107d278fe) 😊🎥.
 ___
 ## 🧰 Setup Instructions 🧰
 1. Clone repository: clone from the console with the command: git clone https://github.com/jv-sep23-group4-D-ArtagnanAndCompany/task-management-app.git
