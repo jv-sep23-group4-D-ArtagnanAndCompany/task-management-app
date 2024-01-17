@@ -35,9 +35,10 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto createTask(TaskRequestDto taskRequestDto) {
         Task task = new Task();
         Task createdTask = savedTask(taskRequestDto, task);
-        telegramService.sendNotification("A new task has been "
-                + "added to your project "
-                + createdTask.getProject().getName(), createdTask.getAssignee());
+        telegramService.sendNotification(String.format("A new task has been "
+                + "added to your project %s with id %s",
+                        createdTask.getProject().getName(), createdTask.getId()),
+                createdTask.getAssignee(), createdTask.getId());
         return taskMapper.toResponseDto(createdTask);
     }
 
@@ -54,9 +55,9 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(taskId).orElseThrow(
                 () -> new EntityNotFoundException(CANT_FIND_TASK_BY_ID + taskId));
         Task updatedTask = savedTask(taskRequestDto, task);
-        telegramService.sendNotification(String.format("A task %s has been updated",
-                        updatedTask.getName()),
-                updatedTask.getAssignee());
+        telegramService.sendNotification(String.format("A task %s has been updated with id %s",
+                        updatedTask.getName(), updatedTask.getId()),
+                updatedTask.getAssignee(), updatedTask.getId());
         return taskMapper.toResponseDto(updatedTask);
     }
 

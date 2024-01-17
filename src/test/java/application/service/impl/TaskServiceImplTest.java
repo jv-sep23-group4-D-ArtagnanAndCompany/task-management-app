@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -19,6 +20,8 @@ import application.model.User;
 import application.repository.ProjectRepository;
 import application.repository.TaskRepository;
 import application.repository.UserRepository;
+import application.service.TelegramService;
+import application.telegram.TelegramBot;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -66,11 +69,12 @@ public class TaskServiceImplTest {
     private static TaskResponseDto taskResponseDto2;
     private static List<Task> tasks;
     private static List<TaskResponseDto> taskResponseDtos;
-
     @Mock
-    private TelegramServiceImpl telegramServiceImpl;
+    private TelegramBot telegramBot;
     @Mock
     private TaskRepository taskRepository;
+    @Mock
+    private TelegramService telegramService;
     @Mock
     private UserRepository userRepository;
     @Mock
@@ -188,8 +192,8 @@ public class TaskServiceImplTest {
 
         // when
         when(taskRepository.save(any(Task.class))).thenReturn(task3);
-        Mockito.doNothing().when(telegramServiceImpl).sendNotification(anyString(),
-                any(User.class));
+        Mockito.lenient().doNothing().when(telegramBot).prepareAndSendMessage(anyLong(),
+                anyString(), anyLong());
         when(taskMapper.toResponseDto(task3)).thenReturn(taskResponseDto3);
 
         // then
@@ -270,8 +274,8 @@ public class TaskServiceImplTest {
                 .setAssigneeId(SECOND_USER_ID);
 
         // when
-        Mockito.doNothing().when(telegramServiceImpl).sendNotification(anyString(),
-                any(User.class));
+        Mockito.lenient().doNothing().when(telegramBot).prepareAndSendMessage(anyLong(),
+                anyString(), anyLong());
         Project project1 = new Project().setId(FIRST_PROJECT_ID);
         when(projectRepository.findById(FIRST_PROJECT_ID)).thenReturn(Optional.of(project1));
 

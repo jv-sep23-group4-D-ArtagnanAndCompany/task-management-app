@@ -43,13 +43,14 @@ public class CommentServiceImpl implements CommentService {
                                 "Can't find task with given id: " + taskId));
         comment.setTask(task);
         comment.setUser(user);
+        Comment savedComment = commentRepository.save(comment);
         User assigneeUser = userRepository.findUserById(task.getAssignee().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Can't find user with given id: "
                         + task.getAssignee().getId()));
-        telegramService.sendNotification("A new comment has been "
-                        + "added to your task "
-                        + task.getName(),
-                assigneeUser);
-        return commentMapper.toDto(commentRepository.save(comment));
+        telegramService.sendNotification(String.format("A new comment has been "
+                        + "added to your task %s with id %s",
+                        task.getName(), savedComment.getId()),
+                assigneeUser, savedComment.getId());
+        return commentMapper.toDto(savedComment);
     }
 }
