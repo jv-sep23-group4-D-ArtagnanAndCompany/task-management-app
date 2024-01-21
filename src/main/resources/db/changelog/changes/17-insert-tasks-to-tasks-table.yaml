@@ -23,10 +23,10 @@ databaseChangeLog:
                   value: '2024-01-24'
               - column:
                   name: project_id
-                  value: 1
+                  valueComputed: (SELECT id FROM projects WHERE name='Sample Project')
               - column:
                   name: assignee_id
-                  value: 1
+                  valueComputed: (SELECT id FROM users WHERE email='alice@gmail.com')
         - insert:
             tableName: tasks
             columns:
@@ -47,7 +47,7 @@ databaseChangeLog:
                   value: '2024-01-24'
               - column:
                   name: project_id
-                  value: 1
+                  valueComputed: (SELECT id FROM projects WHERE name='Sample Project')
               - column:
                   name: assignee_id
-                  value: 1
+                  valueComputed: (SELECT id FROM users WHERE email='alice@gmail.com')

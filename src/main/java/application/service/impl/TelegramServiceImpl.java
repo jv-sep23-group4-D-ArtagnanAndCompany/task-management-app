@@ -15,11 +15,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TelegramServiceImpl implements TelegramService {
     private static final String DEADLINE_MESSAGE = "Deadline for the task %s with id %s is %s!";
+    private static final String cron_value = "0 0 15 * * *";
     private final TelegramBot telegramBot;
     private final TaskRepository taskRepository;
 
     @Override
-    @Scheduled(cron = "0 0 15 * * *")
+    @Scheduled(cron = cron_value)
     public void sendNotificationsAboutDeadlines() {
         taskRepository.getAllByDueDateBetweenAndStatusIsNot(LocalDate.now(),
                         LocalDate.now().plusDays(2), Task.Status.COMPLETED)

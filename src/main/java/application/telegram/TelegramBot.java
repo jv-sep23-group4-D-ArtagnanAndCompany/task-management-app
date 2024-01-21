@@ -11,7 +11,6 @@ import application.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -22,7 +21,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
-@RequiredArgsConstructor
 public class TelegramBot extends TelegramLongPollingBot {
     private static final String USER_FIND_EXCEPTION = "Can't find user by chat id ";
     private static final String COMMENT_FIND_EXCEPTION = "Can't find a comment by id ";
@@ -58,18 +56,23 @@ public class TelegramBot extends TelegramLongPollingBot {
     private static final Long DEFAULT_EMPTY_CHAT_ID = -1L;
     private final CommentRepository commentRepository;
     private final TaskRepository taskRepository;
-
     private final TelegramBotConfig telegramBotConfig;
     private final UserRepository userRepository;
+
+    public TelegramBot(CommentRepository commentRepository,
+                       TaskRepository taskRepository,
+                       TelegramBotConfig telegramBotConfig,
+                       UserRepository userRepository) {
+        super(telegramBotConfig.getToken());
+        this.commentRepository = commentRepository;
+        this.taskRepository = taskRepository;
+        this.telegramBotConfig = telegramBotConfig;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public String getBotUsername() {
         return telegramBotConfig.getBotName();
-    }
-
-    @Override
-    public String getBotToken() {
-        return telegramBotConfig.getToken();
     }
 
     @Override
