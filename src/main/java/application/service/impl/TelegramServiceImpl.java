@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class TelegramServiceImpl implements TelegramService {
     private static final String DEADLINE_MESSAGE = "Deadline for the task %s with id %s is %s!";
     private static final String cron_value = "0 0 15 * * *";
+
     private final TelegramBot telegramBot;
     private final TaskRepository taskRepository;
 
