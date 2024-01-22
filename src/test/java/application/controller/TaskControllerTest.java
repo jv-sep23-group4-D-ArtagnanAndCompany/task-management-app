@@ -38,6 +38,8 @@ import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 @Sql(scripts = { "classpath:database/tasks/remove_all_tasks_from_tasks_table.sql",
         "classpath:database/tasks/add_first_task_to_task_table.sql"},
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(scripts = { "classpath:database/tasks/remove_all_tasks_from_tasks_table.sql"},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TaskControllerTest {
