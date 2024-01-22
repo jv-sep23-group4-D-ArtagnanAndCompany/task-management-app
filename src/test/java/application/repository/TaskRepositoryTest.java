@@ -22,6 +22,9 @@ import org.springframework.test.context.jdbc.Sql;
         "classpath:database/tasks/remove_all_tasks_from_tasks_table.sql",
         "classpath:database/tasks/add_first_task_to_task_table.sql"
         }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = {
+        "classpath:database/tasks/remove_all_tasks_from_tasks_table.sql"
+}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 @DisplayName("""
             Verify create() method
             """)

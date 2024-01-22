@@ -6,7 +6,6 @@ import application.model.Attachment;
 import application.model.Task;
 import application.repository.AttachmentRepository;
 import application.service.AttachmentService;
-import application.service.DropBoxService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class AttachmentServiceImpl implements AttachmentService {
     private final AttachmentRepository attachmentRepository;
     private final AttachmentMapper attachmentMapper;
-    private final DropBoxService dropBoxService;
+    private final DropBoxServiceImpl dropBoxServiceImpl;
 
     @Override
     @Transactional
     public FileUploadResponseDto upload(Long taskId, MultipartFile multipartFile) {
-        FileUploadResponseDto fileUploadResponseDto = dropBoxService
+        FileUploadResponseDto fileUploadResponseDto = dropBoxServiceImpl
                 .uploadFileToDropBox(multipartFile);
         Attachment attachment = attachmentMapper.toEntity(fileUploadResponseDto)
                 .setTask(new Task().setId(taskId));
@@ -38,6 +37,6 @@ public class AttachmentServiceImpl implements AttachmentService {
         attachmentRepository
                 .findAllByTaskId(taskId)
                 .stream()
-                .forEach(a -> dropBoxService.downloadFromDropBox(a, response));
+                .forEach(a -> dropBoxServiceImpl.downloadFromDropBox(a, response));
     }
 }

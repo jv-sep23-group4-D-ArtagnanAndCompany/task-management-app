@@ -1,6 +1,7 @@
 package application.dto.comment;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -10,6 +11,7 @@ import lombok.experimental.Accessors;
 public class CommentRequestDto {
     @NotBlank(message = " field cannot be empty or null")
     private String text;
+    @NotNull
     @Positive(message = " cannot be less then 1")
     private Long taskId;
 }

@@ -11,5 +11,6 @@ public class UserRequestLoginDto {
     @Email(message = " is incorrect")
     private String email;
     @Size(min = 8, message = " must be longer")
+    @Size(max = 40, message = " must be shorter")
     private String password;
 }

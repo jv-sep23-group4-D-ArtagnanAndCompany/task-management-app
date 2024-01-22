@@ -66,6 +66,7 @@ Firstly, you need to register if you haven't already. Next, you'll need to log i
 After that, you must pass the token in the header authorization in the Bearer Token field.
 To elaborate on that, I recorded a video where I showed how all endpoints work, including endpoints, which are accessible for administrators.
 You can watch it by clicking [here](https://www.loom.com/share/53573f09fe684103896f3e9107d278fe) 😊🎥.
+Also, you can send requests from swagger by clicking [here](http://ec2-54-236-111-138.compute-1.amazonaws.com/swagger-ui/index.html#/) 😊.
 ___
 ## 🧰 Setup Instructions 🧰
 1. Clone repository: clone from the console with the command: git clone https://github.com/jv-sep23-group4-D-ArtagnanAndCompany/task-management-app.git

@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: user_id
-                  value: 1
+                  valueComputed: (SELECT id FROM users WHERE email='alice@gmail.com')
               - column:
                   name: name
                   value: Cool Project

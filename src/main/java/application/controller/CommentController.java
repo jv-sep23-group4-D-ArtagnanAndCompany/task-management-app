@@ -28,7 +28,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping()
+    @GetMapping
     @Operation(summary = "Get all comments to the particular task by id",
             description = "Endpoint for getting all comments to the particular task by id")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")

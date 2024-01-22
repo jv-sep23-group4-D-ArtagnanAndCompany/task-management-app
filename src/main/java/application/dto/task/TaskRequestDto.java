@@ -2,6 +2,7 @@ package application.dto.task;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,9 @@ public class TaskRequestDto {
     @NotNull
     private LocalDate dueDate;
     @NotNull
+    @Positive(message = " cannot be less then 1")
     private Long projectId;
     @NotNull
+    @Positive(message = " cannot be less then 1")
     private Long assigneeId;
 }

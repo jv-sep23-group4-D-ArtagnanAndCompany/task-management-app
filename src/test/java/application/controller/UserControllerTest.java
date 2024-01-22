@@ -88,7 +88,7 @@ public class UserControllerTest {
     }
 
     @AfterAll
-    private static void afterAll(
+    static void afterAll(
             @Autowired DataSource dataSource
     ) {
         teardown(dataSource);

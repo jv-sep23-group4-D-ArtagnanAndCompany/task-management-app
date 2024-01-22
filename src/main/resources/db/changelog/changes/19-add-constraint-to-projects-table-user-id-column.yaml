@@ -1,9 +1,0 @@
-databaseChangeLog:
--  changeSet:
-     id:  add-nullable-constraint
-     author:  andriy-hrynevetskyi
-     changes:
-       -  addNotNullConstraint:
-            columnDataType:  bigint
-            columnName:  user_id
-            tableName:  projects

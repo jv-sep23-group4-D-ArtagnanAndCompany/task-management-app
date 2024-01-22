@@ -14,9 +14,10 @@ public class UserRequestRegistrationDto {
     @NotBlank
     private String userName;
     @Size(min = 8, message = " must be longer")
+    @Size(max = 40, message = " must be shorter")
     private String password;
     @NotBlank
-    private String repeatedPassword;
+    private String repeatPassword;
     @Email(message = " is incorrect")
     private String email;
     @NotBlank

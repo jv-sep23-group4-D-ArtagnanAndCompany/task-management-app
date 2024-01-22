@@ -9,7 +9,6 @@ import application.mapper.AttachmentMapper;
 import application.model.Attachment;
 import application.model.Task;
 import application.repository.AttachmentRepository;
-import application.service.DropBoxService;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,7 @@ class AttachmentServiceImplTest {
     @Mock
     private AttachmentMapper attachmentMapper;
     @Mock
-    private DropBoxService dropBoxService;
+    private DropBoxServiceImpl dropBoxServiceImpl;
     @InjectMocks
     private AttachmentServiceImpl attachmentServiceImpl;
 
@@ -62,7 +61,7 @@ class AttachmentServiceImplTest {
                 .setDropBoxFileId(savedAttachment.getDropBoxFileId());
 
         // when
-        when(dropBoxService.uploadFileToDropBox(multipartFile))
+        when(dropBoxServiceImpl.uploadFileToDropBox(multipartFile))
                 .thenReturn(fileUploadResponseDto);
         when(attachmentMapper.toEntity(fileUploadResponseDto)).thenReturn(attachment);
         when(attachmentRepository.save(attachment)).thenReturn(savedAttachment);

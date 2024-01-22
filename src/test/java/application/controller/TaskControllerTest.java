@@ -38,6 +38,8 @@ import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 @Sql(scripts = { "classpath:database/tasks/remove_all_tasks_from_tasks_table.sql",
         "classpath:database/tasks/add_first_task_to_task_table.sql"},
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(scripts = { "classpath:database/tasks/remove_all_tasks_from_tasks_table.sql"},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TaskControllerTest {
@@ -93,17 +95,7 @@ public class TaskControllerTest {
                 .setStatus(STATUS_IN_PROGRESS)
                 .setProjectId(FIRST_PROJECT_ID)
                 .setAssigneeId(FIRST_USER_ID);
-
-        TaskResponseDto taskResponseDto2 = new TaskResponseDto()
-                .setId(SECOND_TASK_ID)
-                .setName(TASK2_NAME)
-                .setDescription(TASK2_DESCRIPTION)
-                .setPriority(PRIORITY_HIGH)
-                .setStatus(STATUS_IN_PROGRESS)
-                .setProjectId(SECOND_PROJECT_ID)
-                .setAssigneeId(SECOND_USER_ID);
-
-        taskResponseDtos = List.of(taskResponseDto1, taskResponseDto2);
+        taskResponseDtos = List.of(taskResponseDto1);
     }
 
     @Test
