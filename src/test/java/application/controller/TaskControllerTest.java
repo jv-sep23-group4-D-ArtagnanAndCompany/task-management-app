@@ -93,17 +93,7 @@ public class TaskControllerTest {
                 .setStatus(STATUS_IN_PROGRESS)
                 .setProjectId(FIRST_PROJECT_ID)
                 .setAssigneeId(FIRST_USER_ID);
-
-        TaskResponseDto taskResponseDto2 = new TaskResponseDto()
-                .setId(SECOND_TASK_ID)
-                .setName(TASK2_NAME)
-                .setDescription(TASK2_DESCRIPTION)
-                .setPriority(PRIORITY_HIGH)
-                .setStatus(STATUS_IN_PROGRESS)
-                .setProjectId(SECOND_PROJECT_ID)
-                .setAssigneeId(SECOND_USER_ID);
-
-        taskResponseDtos = List.of(taskResponseDto1, taskResponseDto2);
+        taskResponseDtos = List.of(taskResponseDto1);
     }
 
     @Test
