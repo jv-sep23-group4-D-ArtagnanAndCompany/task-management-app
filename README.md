@@ -25,7 +25,7 @@ ___
     - POST: /api/auth/register - User registration
     - POST: /api/auth/login - User authentication
 
-2. Users Controller: Managing authentication and user registration
+2. **Users Controller: Managing authentication and user registration**
     - PUT: /users/{id}/role - update user role
     - GET: /users/me - get my profile info
     - PUT/PATCH: /users/me - update profile info
@@ -74,7 +74,7 @@ ___
 3. Build and run project: mvn spring-boot:run
 ___
 ## 🐳 Running with Docker Compose 🐳
-If you prefer to run the Bookstore application in a Docker container using Docker Compose, follow these steps:
+If you prefer to run the task management application in a Docker container using Docker Compose, follow these steps:
 
 1. Clone repository: Clone the repository from the console with the command: git clone https://github.com/jv-sep23-group4-D-ArtagnanAndCompany/task-management-app.git
 
