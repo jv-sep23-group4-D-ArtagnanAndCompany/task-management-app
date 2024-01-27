@@ -38,11 +38,10 @@ public class UserServiceImpl implements UserService {
             throw new RegistrationException(String.format(EMAIL_RESERVED,
                     userRequestRegistrationDto.getEmail()));
         }
-        User user = userMapper.toEntity(userRequestRegistrationDto);
-        user.setPassword(passwordEncoder.encode(userRequestRegistrationDto.getPassword()));
-        Role role = new Role().setId(USER_ROLE_ID);
+        User user = userMapper.toEntity(userRequestRegistrationDto)
+                .setPassword(passwordEncoder.encode(userRequestRegistrationDto.getPassword()));
         Set<Role> roles = new HashSet<>();
-        roles.add(role);
+        roles.add(new Role().setId(USER_ROLE_ID));
         user.setRoleSet(roles);
         return userMapper.toResponseDto(userRepository.save(user));
     }
@@ -50,12 +49,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserProfileResponseDto updateRole(Long id, UpdateRoleRequestDto roleRequestDto) {
         User userFromDb = getUserFromDb(id);
-        Set<Role> roleSet = userFromDb.getRoleSet();
-        Role role = roleRepository.findRoleByRoleName(roleRequestDto.getRoleName())
-                .orElseThrow(() -> new EntityNotFoundException(String.format(
-                        ROLE_NOT_FOUND, roleRequestDto.getRoleName())));
-        roleSet.add(role);
-        userFromDb.setRoleSet(roleSet);
+        Role role = findRoleByRoleName(roleRequestDto.getRoleName());
+        userFromDb.getRoleSet().add(role);
         userRepository.save(userFromDb);
         return userMapper.toResponseDtoWithRoles(userFromDb);
     }
@@ -70,16 +65,22 @@ public class UserServiceImpl implements UserService {
             Long id,
             UpdateProfileRequestDto profileRequestDto) {
         User userFromDb = getUserFromDb(id);
-        userFromDb.setUserName(profileRequestDto.getUserName());
-        userFromDb.setEmail(profileRequestDto.getEmail());
-        userFromDb.setFirstName(profileRequestDto.getFirstName());
-        userFromDb.setLastName(profileRequestDto.getLastName());
-        userRepository.save(userFromDb);
-        return userMapper.toResponseDtoWithRoles(userFromDb);
+        User user = userMapper.toEntityFromUpdateRequest(profileRequestDto);
+        user.setId(userFromDb.getId())
+                .setTelegramChatId(userFromDb.getTelegramChatId())
+                .setRoleSet(userFromDb.getRoleSet())
+                        .setPassword(userFromDb.getPassword());
+        return userMapper.toResponseDtoWithRoles(userRepository.save(user));
     }
 
     private User getUserFromDb(Long id) {
         return userRepository.findUserById(id).orElseThrow(() -> new EntityNotFoundException(
                 String.format(CANT_FIND_BY_ID, id)));
+    }
+
+    private Role findRoleByRoleName(Role.RoleName roleName) {
+        return roleRepository.findRoleByRoleName(roleName)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(
+                        ROLE_NOT_FOUND, roleName)));
     }
 }

@@ -1,5 +1,6 @@
 package application.dto.user;
 
+import application.dto.ValidationMessages;
 import application.validation.PasswordsAreEqual;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,17 +12,18 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @PasswordsAreEqual
 public class UserRequestRegistrationDto {
-    @NotBlank
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String userName;
-    @Size(min = 8, message = " must be longer")
-    @Size(max = 40, message = " must be shorter")
+    @Size(min = 8, message = ValidationMessages.PASSWORD_LONGER)
+    @Size(max = 40, message = ValidationMessages.PASSWORD_SHORTER)
     private String password;
-    @NotBlank
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String repeatPassword;
-    @Email(message = " is incorrect")
+    @NotBlank
+    @Email(message = ValidationMessages.EMAIL)
     private String email;
-    @NotBlank
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String firstName;
-    @NotBlank
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String lastName;
 }

@@ -25,5 +25,4 @@ public class TaskResponseDto {
     private Long projectId;
 
     private Long assigneeId;
-
 }

@@ -1,5 +1,6 @@
 package application.dto.task;
 
+import application.dto.ValidationMessages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -12,20 +13,20 @@ import lombok.experimental.Accessors;
 @RequiredArgsConstructor
 @Accessors(chain = true)
 public class TaskRequestDto {
-    @NotBlank
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String name;
-    @NotBlank
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String description;
-    @NotBlank
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String priority;
-    @NotBlank
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String status;
-    @NotNull
+    @NotNull(message = ValidationMessages.NOT_NULL)
     private LocalDate dueDate;
     @NotNull
-    @Positive(message = " cannot be less then 1")
+    @Positive(message = ValidationMessages.POSITIVE)
     private Long projectId;
     @NotNull
-    @Positive(message = " cannot be less then 1")
+    @Positive(message = ValidationMessages.POSITIVE)
     private Long assigneeId;
 }

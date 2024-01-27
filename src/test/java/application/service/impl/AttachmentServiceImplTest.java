@@ -65,7 +65,7 @@ class AttachmentServiceImplTest {
                 .thenReturn(fileUploadResponseDto);
         when(attachmentMapper.toEntity(fileUploadResponseDto)).thenReturn(attachment);
         when(attachmentRepository.save(attachment)).thenReturn(savedAttachment);
-        when(attachmentMapper.toResponseDto(attachment)).thenReturn(resultResponseDto);
+        when(attachmentMapper.toResponseDto(savedAttachment)).thenReturn(resultResponseDto);
 
         // then
         FileUploadResponseDto actual = attachmentServiceImpl.upload(1L, multipartFile);

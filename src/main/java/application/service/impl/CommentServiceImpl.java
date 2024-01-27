@@ -20,6 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
+    private static final String FORMAT_MESSAGE
+            = "A new comment has been added to your task %s with id %s";
+    private static final String TASK_FINDING_EXCEPTION = "Can't find task with given id: ";
+    private static final String USER_FINDING_EXCEPTION = "Can't find user with given id: ";
     private final TelegramService telegramService;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
@@ -36,19 +40,16 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentResponseDto save(CommentRequestDto requestDto, User user) {
         Comment comment = commentMapper.toEntity(requestDto);
-        Long taskId = requestDto.getTaskId();
-        Task task = taskRepository.findById(taskId)
+        Task task = taskRepository.findById(requestDto.getTaskId())
                 .orElseThrow(
                         () -> new EntityNotFoundException(
-                                "Can't find task with given id: " + taskId));
-        comment.setTask(task);
+                                TASK_FINDING_EXCEPTION + requestDto.getTaskId()));
         comment.setUser(user);
         Comment savedComment = commentRepository.save(comment);
         User assigneeUser = userRepository.findUserById(task.getAssignee().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Can't find user with given id: "
+                .orElseThrow(() -> new EntityNotFoundException(USER_FINDING_EXCEPTION
                         + task.getAssignee().getId()));
-        telegramService.sendNotification(String.format("A new comment has been "
-                        + "added to your task %s with id %s",
+        telegramService.sendNotification(String.format(FORMAT_MESSAGE,
                         task.getName(), savedComment.getId()),
                 assigneeUser, savedComment.getId());
         return commentMapper.toDto(savedComment);

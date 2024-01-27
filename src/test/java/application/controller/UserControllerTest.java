@@ -15,12 +15,9 @@ import application.model.Role;
 import application.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.sql.Connection;
 import java.util.HashSet;
 import java.util.Set;
-import javax.sql.DataSource;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,13 +26,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -48,17 +44,17 @@ public class UserControllerTest {
     private static final Long ADMIN_ROLE_ID = 1L;
     private static final Long USER_ROLE_ID = 2L;
     private static final Long USER1_ID = 3L;
-    private static final String CLASS_PATH_RESOURCE_ADD =
-            "database/users/add_two_default_users.sql";
-    private static final String CLASS_PATH_RESOURCE_DELETE =
-            "database/users/remove_two_added_users.sql";
-    private static final String USER1_EMAIL = "john@gmail.com";
+    private static final String USER1_EMAIL = "john1@gmail.com";
     private static final String USER1_FIRST_NAME = "John";
     private static final String USER1_LAST_NAME = "Lollipop";
     private static final String USER1_USER_NAME = "John";
+    private static final String USER3_EMAIL = "john12@gmail.com";
+    private static final String USER3_FIRST_NAME = "John12";
+    private static final String USER3_LAST_NAME = "Lollipop12";
+    private static final String USER3_USER_NAME = "John12";
     private static final String USER_PASSWORD =
             "$2a$10$fRCKtHfKmoKkzXByokmM6.FVmatskXfInb.IYBUI1ukvDBjN4EqGG";
-    private static final String USER2_EMAIL = "kris@gmail.com";
+    private static final String USER2_EMAIL = "kris1@gmail.com";
     private static final String USER2_FIRST_NAME = "Kris";
     private static final String USER2_LAST_NAME = "Fisher";
     private static final String USER2_USER_NAME = "Kris";
@@ -71,27 +67,11 @@ public class UserControllerTest {
     @BeforeAll
     @SneakyThrows
     static void beforeAll(
-            @Autowired DataSource dataSource,
             @Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(springSecurity())
                 .build();
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(
-                            CLASS_PATH_RESOURCE_ADD)
-            );
-        }
-    }
-
-    @AfterAll
-    static void afterAll(
-            @Autowired DataSource dataSource
-    ) {
-        teardown(dataSource);
     }
 
     @BeforeEach
@@ -110,6 +90,10 @@ public class UserControllerTest {
     }
 
     @Test
+    @Sql(scripts = "classpath:database/users/add_two_default_users.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:database/users/remove_two_added_users.sql",
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @WithMockUser(username = "user", roles = {"ADMIN"})
     @DisplayName("Update user role")
     public void updateUserRole_WithAdminAndUser_ReturnProfileInfoWithUpdatedRole()
@@ -147,6 +131,10 @@ public class UserControllerTest {
     }
 
     @Test
+    @Sql(scripts = "classpath:database/users/add_two_default_users.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:database/users/remove_two_added_users.sql",
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @DisplayName("Get user profile info")
     public void getProfileInfo_WithUser_ReturnProfileInfo() throws Exception {
         // When
@@ -169,13 +157,17 @@ public class UserControllerTest {
     @Test
     @WithMockUser(username = "user", roles = {"ADMIN"})
     @DisplayName("Update user role")
+    @Sql(scripts = "classpath:database/users/add_two_default_users.sql",
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = "classpath:database/users/remove_two_added_users.sql",
+            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void updateProfileInfo_WithUser_ReturnProfileInfo() throws Exception {
         // Given
         UpdateProfileRequestDto profileRequestDto = new UpdateProfileRequestDto();
-        profileRequestDto.setUserName(USER1_USER_NAME);
-        profileRequestDto.setEmail(USER1_EMAIL);
-        profileRequestDto.setFirstName(USER1_FIRST_NAME);
-        profileRequestDto.setLastName(USER1_LAST_NAME);
+        profileRequestDto.setUserName(USER3_USER_NAME);
+        profileRequestDto.setEmail(USER3_EMAIL);
+        profileRequestDto.setFirstName(USER3_FIRST_NAME);
+        profileRequestDto.setLastName(USER3_LAST_NAME);
         String jsonBody = objectMapper.writeValueAsString(profileRequestDto);
         // When
         MvcResult result = mockMvc.perform(put("/api/users/me")
@@ -199,17 +191,5 @@ public class UserControllerTest {
         expected.setRoleIds(userMapper.toSetIds(roles));
         assertNotNull(actual);
         assertEquals(expected, actual);
-    }
-
-    @SneakyThrows
-    private static void teardown(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource(
-                            CLASS_PATH_RESOURCE_DELETE)
-            );
-        }
     }
 }

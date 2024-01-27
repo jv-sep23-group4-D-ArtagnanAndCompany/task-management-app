@@ -27,8 +27,7 @@ public class AttachmentServiceImpl implements AttachmentService {
         Attachment attachment = attachmentMapper.toEntity(fileUploadResponseDto)
                 .setTask(new Task().setId(taskId));
         Attachment savedAttachment = attachmentRepository.save(attachment);
-        attachment.setId(savedAttachment.getId()).setUploadDate(savedAttachment.getUploadDate());
-        return attachmentMapper.toResponseDto(attachment);
+        return attachmentMapper.toResponseDto(savedAttachment);
     }
 
     @Override

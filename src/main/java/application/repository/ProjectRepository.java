@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    boolean existsProjectById(Long id);
-
     List<Project> findAllByUserId(Long userId, Pageable pageable);
 
     Optional<Project> findByIdAndUserId(Long projectId, Long userId);
