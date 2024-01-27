@@ -35,18 +35,15 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public LabelResponseDto update(LabelRequestDto labelRequestDto, Long id) {
-        checkIfLabelExists(id);
-        Label label = labelMapper.toEntity(labelRequestDto).setId(id);
-        return labelMapper.toResponseDto(labelRepository.save(label));
+        if (labelRepository.findById(id).isPresent()) {
+            Label label = labelMapper.toEntity(labelRequestDto).setId(id);
+            return labelMapper.toResponseDto(labelRepository.save(label));
+        }
+        throw new EntityNotFoundException(CANT_FIND_BY_ID + id);
     }
 
     @Override
     public void deleteById(Long id) {
         labelRepository.deleteById(id);
-    }
-
-    private void checkIfLabelExists(Long id) {
-        Label label = labelRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(CANT_FIND_BY_ID + id));
     }
 }

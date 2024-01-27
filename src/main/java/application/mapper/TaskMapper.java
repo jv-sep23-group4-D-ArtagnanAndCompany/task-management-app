@@ -16,7 +16,19 @@ public interface TaskMapper {
     @Mapping(target = "priority", source = "priority", qualifiedByName = "getPriorityFromEnum")
     TaskResponseDto toResponseDto(Task task);
 
+    @Mapping(target = "status", source = "status", qualifiedByName = "getStatusFromString")
+    @Mapping(target = "priority", source = "priority", qualifiedByName = "getPriorityFromString")
     Task toEntity(TaskRequestDto taskRequestDto);
+
+    @Named("getStatusFromString")
+    default Task.Status getStatusFromString(String status) {
+        return Task.Status.valueOf(status);
+    }
+
+    @Named("getPriorityFromString")
+    default Task.Priority getPriorityFromString(String priority) {
+        return Task.Priority.valueOf(priority);
+    }
 
     @Named("getStatusFromEnum")
     default String getStatusFromEnum(Task.Status status) {

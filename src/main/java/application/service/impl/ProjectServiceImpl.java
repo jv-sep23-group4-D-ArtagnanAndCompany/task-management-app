@@ -30,38 +30,35 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectResponseDto findById(Long userId, Long id) {
-        Project project = projectRepository.findById(userId, id).orElseThrow(
-                () -> new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id)
-        );
+        Project project = findProjectById(userId, id);
         return projectMapper.toResponseDto(project);
     }
 
     @Override
     public ProjectResponseDto save(ProjectRequestDto requestDto, User user) {
-        Project project = projectMapper.toEntity(requestDto);
-        project.setStatus(Project.Status.INITIATED);
-        project.setUser(user);
+        Project project = projectMapper.toEntity(requestDto).setUser(user);
         return projectMapper.toResponseDto(projectRepository.save(project));
     }
 
     @Override
     @Transactional
     public ProjectResponseDto update(ProjectUpdateDto requestDto, Long id, Long userId) {
-        Project project = projectRepository.findByIdAndUserId(id, userId).orElseThrow(
-                () -> new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id));
-        project.setName(requestDto.getName());
-        project.setDescription(requestDto.getDescription());
-        project.setStartDate(requestDto.getStartDate());
-        project.setEndDate(requestDto.getEndDate());
-        project.setStatus(Project.Status.valueOf(requestDto.getStatus()));
-        return projectMapper.toResponseDto(projectRepository.save(project));
+        if (projectRepository.findByIdAndUserId(id, userId).isPresent()) {
+            Project project = projectMapper.toEntityFromUpdateDto(requestDto)
+                    .setId(id).setUser(new User().setId(userId));
+            return projectMapper.toResponseDto(projectRepository.save(project));
+        }
+        throw new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id);
     }
 
     @Override
     public void delete(Long id) {
-        if (!projectRepository.existsProjectById(id)) {
-            throw new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id);
-        }
         projectRepository.deleteById(id);
+    }
+
+    private Project findProjectById(Long userId, Long id) {
+        return projectRepository.findById(userId, id).orElseThrow(
+                () -> new EntityNotFoundException(ENTITY_NOT_FOUND_ERROR_MESSAGE + id)
+        );
     }
 }

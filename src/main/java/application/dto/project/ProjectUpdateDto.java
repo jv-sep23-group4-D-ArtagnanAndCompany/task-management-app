@@ -1,5 +1,6 @@
 package application.dto.project;
 
+import application.dto.ValidationMessages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -7,14 +8,14 @@ import lombok.Data;
 
 @Data
 public class ProjectUpdateDto {
-    @NotBlank(message = " cannot be null or empty")
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String name;
-    @NotBlank(message = " cannot be null or empty")
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String description;
-    @NotNull(message = " cannot be null or empty")
+    @NotNull(message = ValidationMessages.NOT_NULL)
     private LocalDate startDate;
-    @NotNull(message = " cannot be null or empty")
+    @NotNull(message = ValidationMessages.NOT_NULL)
     private LocalDate endDate;
-    @NotBlank(message = " cannot be null or empty")
+    @NotBlank(message = ValidationMessages.NOT_NULL)
     private String status;
 }

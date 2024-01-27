@@ -191,7 +191,8 @@ public class TaskServiceImplTest {
         when(userRepository.findById(SECOND_USER_ID)).thenReturn(Optional.of(user2));
 
         // when
-        when(taskRepository.save(any(Task.class))).thenReturn(task3);
+        when(taskMapper.toEntity(taskRequestDto3)).thenReturn(task3);
+        when(taskRepository.save(task3)).thenReturn(task3);
         Mockito.lenient().doNothing().when(telegramBot).prepareAndSendMessage(anyLong(),
                 anyString(), anyLong());
         when(taskMapper.toResponseDto(task3)).thenReturn(taskResponseDto3);
@@ -274,16 +275,14 @@ public class TaskServiceImplTest {
                 .setAssigneeId(SECOND_USER_ID);
 
         // when
-        Mockito.lenient().doNothing().when(telegramBot).prepareAndSendMessage(anyLong(),
-                anyString(), anyLong());
-        Project project1 = new Project().setId(FIRST_PROJECT_ID);
-        when(projectRepository.findById(FIRST_PROJECT_ID)).thenReturn(Optional.of(project1));
 
+        when(taskRepository.findById(SECOND_TASK_ID)).thenReturn(Optional.of(task2));
         User user2 = new User().setId(SECOND_USER_ID);
         when(userRepository.findById(SECOND_USER_ID)).thenReturn(Optional.of(user2));
-        when(taskRepository.findById(SECOND_TASK_ID)).thenReturn(Optional.of(updatedTask2));
-
+        when(taskMapper.toEntity(updatedTaskRequestDto2)).thenReturn(updatedTask2);
         when(taskRepository.save(updatedTask2)).thenReturn(updatedTask2);
+        Mockito.lenient().doNothing().when(telegramBot).prepareAndSendMessage(anyLong(),
+                anyString(), anyLong());
         when(taskMapper.toResponseDto(updatedTask2)).thenReturn(updatedTaskResponseDto2);
 
         // then

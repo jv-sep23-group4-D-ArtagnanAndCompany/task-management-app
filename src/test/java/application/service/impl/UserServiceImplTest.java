@@ -130,6 +130,12 @@ public class UserServiceImplTest {
                 .setFirstName(USER_FIRST_NAME)
                 .setLastName(USER_LAST_NAME)
                 .setRoleSet(Set.of(new Role().setId(USER_ROLE_ID)));
+        User kris = new User();
+        kris.setId(USER_ID)
+                .setUserName(UPDATE_USER_USER_NAME)
+                .setEmail(UPDATE_USER_EMAIL)
+                .setFirstName(UPDATE_USER_FIRST_NAME)
+                .setLastName(UPDATE_USER_LAST_NAME);
         UserProfileResponseDto expectedProfileResponseDto = new UserProfileResponseDto()
                 .setId(USER_ID)
                 .setUserName(UPDATE_USER_USER_NAME)
@@ -141,8 +147,9 @@ public class UserServiceImplTest {
         // When
         when(userRepository.findUserById(john.getId()))
                 .thenReturn(Optional.of(john));
-        when(userRepository.save(john)).thenReturn(john);
-        when(userMapper.toResponseDtoWithRoles(john)).thenReturn(expectedProfileResponseDto);
+        when(userMapper.toEntityFromUpdateRequest(profileRequestDto)).thenReturn(kris);
+        when(userRepository.save(kris)).thenReturn(kris);
+        when(userMapper.toResponseDtoWithRoles(kris)).thenReturn(expectedProfileResponseDto);
 
         // Then
         UserProfileResponseDto actualProfileResponseDto =

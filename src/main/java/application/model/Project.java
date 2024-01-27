@@ -43,7 +43,7 @@ public class Project {
     private LocalDate endDate;
     @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(nullable = false)
-    private Status status;
+    private Status status = Status.INITIATED;
     @Column(nullable = false)
     private boolean isDeleted = false;
 

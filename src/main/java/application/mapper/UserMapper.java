@@ -1,6 +1,7 @@
 package application.mapper;
 
 import application.config.MapperConfig;
+import application.dto.user.UpdateProfileRequestDto;
 import application.dto.user.UserProfileResponseDto;
 import application.dto.user.UserRequestRegistrationDto;
 import application.dto.user.UserResponseDto;
@@ -21,6 +22,8 @@ public interface UserMapper {
 
     @Mapping(target = "roleIds", source = "roleSet", qualifiedByName = "toSetIds")
     UserProfileResponseDto toResponseDtoWithRoles(User user);
+
+    User toEntityFromUpdateRequest(UpdateProfileRequestDto profileRequestDto);
 
     @Named(value = "toSetIds")
     default Set<Long> toSetIds(Set<Role> roleSet) {
